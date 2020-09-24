@@ -12,6 +12,11 @@ fatal()
     exit 1
 }
 
+info()
+{
+    echo "$*"
+}
+
 unpack_tgz()
 {
     epm assure erc || fatal
