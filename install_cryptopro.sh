@@ -1,0 +1,117 @@
+#!/bin/sh
+
+LOCALPATH="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
+# TODO: only if not root
+SUDO=sudo
+
+fatal()
+{
+    echo "FATAL: $*" >&2
+    exit 1
+}
+
+unpack_tgz()
+{
+    epm assure erc || fatal
+    local i
+    for i in "$LOCALPATH" . ; do
+        [ -s "$i/$1" ] || continue
+        erc "$i/$1"
+        return
+    done
+    fatal "Can't find $1 in the current dir $(pwd). Download it and put in here,"
+}
+
+install_lsb64()
+{
+    epmi lsb-release lsb-init
+    epme i586-lsb-core --nodeps
+    epme lsb-core --nodeps
+    epmi lsb-core || fatal
+}
+
+install_lsb32()
+{
+    epmi lsb-release lsb-init
+    case $(distro_info -d) in
+        ALTLinux)
+            ;;
+        *)
+            fatal "$(distro_info -e) is not yet supported"
+            ;;
+    esac
+
+    # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=38855
+    # Следующие пакеты имеют неудовлетворенные зависимости:
+    #    lsb-cprocsp-rdr.32bit: Для установки требует: lsb-core-ia32 (>= 3.0) но пакет не может быть установлен
+    case $(distro_info -v) in
+        Sisyphus)
+            fatal "TODO: unsupported"
+            ;;
+        p9)
+            epme i586-lsb-core --nodeps
+            epme lsb-core --nodeps
+            epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
+            ;;
+        p8)
+            epme i586-lsb-core lsb-core --nodeps
+            epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
+            ;;
+        *)
+            fatal "$(distro_info -e) is not yet supported"
+            ;;
+    esac
+}
+
+INSTALL32=''
+INSTALL64=''
+case "$1" in
+    32)
+        INSTALL32="$1"
+        ;;
+    64)
+        INSTALL64="$1"
+        ;;
+    both)
+        INSTALL32="$1"
+        INSTALL64="$1"
+        ;;
+    *)
+        fatal "Run with 32|64|both param"
+esac
+
+if [ -n "$(epmqp cprocsp)" ] ; then
+    echo "Warning: You are already have cprocsp packages installed. Use uninstall_cryptopro.sh first."
+fi
+
+
+if [ -n "$INSTALL64" ] ; then
+    [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
+    unpack_tgz linux-amd64.tgz || fatal "Can't unpack"
+    cd linux-amd64 || fatal
+    install_lsb64 || fatal
+    $SUDO bash ./install.sh || fatal
+
+    # ruToken support
+    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
+    epmi cprocsp-rdr-rutoken-64-5.*.x86_64.rpm cprocsp-rdr-pcsc-64-5.*.x86_64.rpm || fatal
+
+    # TODO: GUI
+    # epmi libgtk+2 libSM
+    #Граф. оболочка: cprocsp-cptools-gtk-5.*.x86_64.rpm
+fi
+
+if [ -n "$INSTALL32" ] ; then
+    [ -d linux-ia32 ] && fatal "Remove linux-ia32 dir first"
+    unpack_tgz linux-ia32.tgz || fatal "Can't unpack"
+    cd linux-ia32 || fatal
+    install_lsb32 || fatal
+    $SUDO i586 bash ./install.sh || fatal
+
+    # ruToken support
+    epmi i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp || fatal
+    epmi cprocsp-rdr-rutoken-5.*.i686.rpm cprocsp-rdr-pcsc-5.*.i686.rpm || fatal
+
+    # TODO: GUI
+    # epmi i586-libgtk+2 i586-libSM Граф. оболочка: cprocsp-cptools-gtk-5.0.11233-5.i686.rpm
+fi
