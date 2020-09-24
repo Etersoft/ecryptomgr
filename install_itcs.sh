@@ -63,13 +63,14 @@ install_itcs()
         EPMI="$SUDO rpm -ivh --badreloc --relocate /opt/itcs=/opt/itcs32"
     fi
 
-    $EPMI itcs-licensing-*.$ARCH.rpm \
-          itcs-entropy-gost-4.*.$ARCH.rpm || fatal
+    $EPMI itcs-licensing-*.$ARCH.rpm || fatal
 
     # ver 4.4
-    if ls -1 | grep -q "^itcs-know-path-.*.$ARCH.rpm" ; then
+    if ls -1 | grep -q "^itcs-known-path-.*.$ARCH.rpm" ; then
         $EPMI itcs-known-path-*.$ARCH.rpm
     fi
+
+    $EPMI itcs-entropy-gost-4.*.$ARCH.rpm || fatal
 
     $EPMI itcs-winapi-4.*.$ARCH.rpm \
           itcs-csp-gost-4.*.$ARCH.rpm || fatal
