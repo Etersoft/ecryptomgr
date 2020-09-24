@@ -120,6 +120,10 @@ if [ -n "$INSTALL64" ] ; then
     fi
     cd linux-amd64 || fatal
     install_lsb64 || fatal
+
+    echo
+    echo "Installing x86_64 packages ..."
+
     $SUDO bash ./install.sh || fatal
 
 
@@ -154,6 +158,10 @@ if [ -n "$INSTALL32" ] ; then
 
     cd linux-ia32 || fatal
     install_lsb32 || fatal
+
+    echo
+    echo "Installing i686 packages ..."
+
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
         epmi cprocsp-curl-*.i686.rpm cprocsp-rdr-rutoken-*.i686.rpm lsb-cprocsp-rdr-*.i686.rpm \

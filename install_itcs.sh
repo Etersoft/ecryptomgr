@@ -40,6 +40,7 @@ case "$1" in
         INSTALL64="$1"
         ;;
     both)
+        fatal "Sorry, biarch don't support yet"
         INSTALL32="$1"
         INSTALL64="$1"
         ;;
@@ -54,13 +55,17 @@ esac
 install_itcs()
 {
     local ARCH=$1
+
+    echo
+    echo "Installing $ARCH packages ..."
+
     if ! ls -1 | grep -q "^itcs-licensing-.*.$ARCH.rpm" ; then
         fatal "Can't find itcs $ARCH.rpm packages in the current dir $pwd. Run me in the distro dir"
     fi
 
     EPMI="epmi"
     if [ "$INSTALL32" = "both" ] ; then
-        EPMI="$SUDO rpm -ivh --badreloc --relocate /opt/itcs=/opt/itcs32"
+        EPMI="$SUDO rpm -ivh --force --badreloc --relocate /opt/itcs=/opt/itcs32"
     fi
 
     $EPMI itcs-licensing-*.$ARCH.rpm || fatal
