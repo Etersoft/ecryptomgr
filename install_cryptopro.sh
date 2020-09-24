@@ -106,8 +106,13 @@ if [ -n "$INSTALL32" ] ; then
     unpack_tgz linux-ia32.tgz || fatal "Can't unpack"
     cd linux-ia32 || fatal
     install_lsb32 || fatal
-    $SUDO i586 bash ./install.sh || fatal
-
+    if [ "$INSTALL32" = "both" ] ; then
+        # hack, otherwise install.sh removed 64bit packages
+        epmi cprocsp-curl-5.*.i686.rpm cprocsp-rdr-rutoken-5.*.i686.rpm lsb-cprocsp-rdr-5.*.i686.rpm \
+             lsb-cprocsp-kc1-5.*.i686.rpm lsb-cprocsp-capilite-5.*.i686.rpm cprocsp-rdr-pcsc-5.*.i686.rpm
+    else
+        $SUDO i586 bash ./install.sh || fatal
+    fi
     # ruToken support
     epmi i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp || fatal
     epmi cprocsp-rdr-rutoken-5.*.i686.rpm cprocsp-rdr-pcsc-5.*.i686.rpm || fatal
