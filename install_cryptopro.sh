@@ -28,8 +28,7 @@ install_lsb64()
 {
     epmi lsb-release lsb-init
     epme i586-lsb-core --nodeps
-    epme lsb-core --nodeps
-    epmi lsb-core || fatal
+    epm reinstall lsb-core || fatal
 }
 
 install_lsb32()
@@ -51,13 +50,26 @@ install_lsb32()
             fatal "TODO: unsupported"
             ;;
         p9)
+            # HACK:
+            epm assure eget
+
             epme i586-lsb-core --nodeps
+            # FIXME: --force and apt-get are incompatible
+            # epmi download: use apt-get after download
+            #epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
+            eget http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
             epme lsb-core --nodeps
-            epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
+            epmi lsb-core-4.0-alt12.i586.rpm
             ;;
         p8)
-            epme i586-lsb-core lsb-core --nodeps
-            epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
+            # HACK:
+            epm assure eget
+
+            epme i586-lsb-core --nodeps
+            #epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
+            eget http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
+            epme lsb-core --nodeps
+            epmi lsb-core-4.0-alt5.i586.rpm
             ;;
         *)
             fatal "$(distro_info -e) is not yet supported"
@@ -83,16 +95,20 @@ case "$1" in
 esac
 
 if [ -n "$(epmqp cprocsp)" ] ; then
-    echo "Warning: You are already have cprocsp packages installed. Use uninstall_cryptopro.sh first."
+    fatal "You are already have cprocsp packages installed. Run uninstall_cryptopro.sh first."
 fi
 
 
 if [ -n "$INSTALL64" ] ; then
-    [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
+    [ -d linux-amd64 ] && rm -rfv linux-amd64/
+    # [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
     unpack_tgz linux-amd64.tgz || fatal "Can't unpack"
     cd linux-amd64 || fatal
     install_lsb64 || fatal
     $SUDO bash ./install.sh || fatal
+
+    # PKCS#11
+    epmi lsb-cprocsp-pkcs11-64-5.*.x86_64.rpm
 
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
@@ -101,10 +117,15 @@ if [ -n "$INSTALL64" ] ; then
 
     epmi libgtk+2 libSM
     epmi cprocsp-cptools-gtk-64-5.*.x86_64.rpm
+    epmi cprocsp-rdr-gui-gtk-64-5.*.x86_64.rpm
+    cd -
+    # needed for unstalled
+    # rm -rfv linux-amd64
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    [ -d linux-ia32 ] && fatal "Remove linux-ia32 dir first"
+    [ -d linux-ia32 ] && rm -rfv linux-ia32/
+    # [ -d linux-ia32 ] && fatal "Remove linux-ia32 dir first"
     unpack_tgz linux-ia32.tgz || fatal "Can't unpack"
     cd linux-ia32 || fatal
     install_lsb32 || fatal
@@ -115,6 +136,10 @@ if [ -n "$INSTALL32" ] ; then
     else
         $SUDO i586 bash ./install.sh || fatal
     fi
+
+    # PKCS#11
+    epmi lsb-cprocsp-pkcs11-5.*.i686.rpm
+
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
     epmi i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp i586-libpangox-compat || fatal
@@ -125,4 +150,8 @@ if [ -n "$INSTALL32" ] ; then
 
     epmi i586-libgtk+2 i586-libSM
     epmi cprocsp-cptools-gtk-5.*.i686.rpm
+    epmi cprocsp-rdr-gui-gtk-5.*.i686.rpm
+    cd -
+    # needed for uninstall
+    # rm -rfv linux-ia32
 fi
