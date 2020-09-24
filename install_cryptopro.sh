@@ -106,9 +106,13 @@ fi
 
 
 if [ -n "$INSTALL64" ] ; then
-    [ -d linux-amd64 ] && rm -rfv linux-amd64/
-    # [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
-    unpack_tgz linux-amd64.tgz || fatal "Can't unpack"
+    if [ -d linux-amd64 ] ; then
+        echo "Note: Will use existed linux-amd64 ..."
+        # rm -rfv linux-amd64/
+        # [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
+    else
+        unpack_tgz linux-amd64.tgz || fatal "Can't unpack"
+    fi
     cd linux-amd64 || fatal
     install_lsb64 || fatal
     $SUDO bash ./install.sh || fatal
@@ -135,9 +139,14 @@ if [ -n "$INSTALL64" ] ; then
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    [ -d linux-ia32 ] && rm -rfv linux-ia32/
-    # [ -d linux-ia32 ] && fatal "Remove linux-ia32 dir first"
-    unpack_tgz linux-ia32.tgz || fatal "Can't unpack"
+    if [ -d linux-ia32 ] ; then 
+        echo "Note: Will use existed linux-ia32 ..."
+        # rm -rfv linux-ia32/
+        # [ -d linux-ia32 ] && fatal "Remove linux-ia32 dir first"
+    else
+        unpack_tgz linux-ia32.tgz || fatal "Can't unpack"
+    fi
+
     cd linux-ia32 || fatal
     install_lsb32 || fatal
     if [ "$INSTALL32" = "both" ] ; then
