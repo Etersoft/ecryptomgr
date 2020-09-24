@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# see https://www.altlinux.org/КриптоПро
+
 LOCALPATH="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
 # TODO: only if not root
 SUDO=sudo
@@ -93,12 +95,12 @@ if [ -n "$INSTALL64" ] ; then
     $SUDO bash ./install.sh || fatal
 
     # ruToken support
-    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
+    # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
+    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp libpangox-compat opensc pcsc-lite newt52
     epmi cprocsp-rdr-rutoken-64-5.*.x86_64.rpm cprocsp-rdr-pcsc-64-5.*.x86_64.rpm || fatal
 
-    # TODO: GUI
-    # epmi libgtk+2 libSM
-    #Граф. оболочка: cprocsp-cptools-gtk-5.*.x86_64.rpm
+    epmi libgtk+2 libSM
+    epmi cprocsp-cptools-gtk-64-5.*.x86_64.rpm
 fi
 
 if [ -n "$INSTALL32" ] ; then
@@ -114,9 +116,13 @@ if [ -n "$INSTALL32" ] ; then
         $SUDO i586 bash ./install.sh || fatal
     fi
     # ruToken support
-    epmi i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp || fatal
+    # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
+    epmi i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp i586-libpangox-compat || fatal
+    # TODO: install if not both?
+    #opensc pcsc-lite newt52 || fatal
+    # epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp 
     epmi cprocsp-rdr-rutoken-5.*.i686.rpm cprocsp-rdr-pcsc-5.*.i686.rpm || fatal
 
-    # TODO: GUI
-    # epmi i586-libgtk+2 i586-libSM Граф. оболочка: cprocsp-cptools-gtk-5.0.11233-5.i686.rpm
+    epmi i586-libgtk+2 i586-libSM
+    epmi cprocsp-cptools-gtk-5.*.i686.rpm
 fi
