@@ -101,7 +101,7 @@ case "$1" in
 esac
 
 if [ -n "$(epmqp cprocsp)" ] ; then
-    fatal "You are already have cprocsp packages installed. Run uninstall_cryptopro.sh first."
+    info "You are already have cprocsp packages installed. Run uninstall_cryptopro.sh first (or errors are possible)."
 fi
 
 
@@ -115,20 +115,20 @@ if [ -n "$INSTALL64" ] ; then
 
 
     if [ -n "$DEVEL" ] ; then
-         epmi lsb-cprocsp-devel-5.*.noarch.rpm
+         epmi lsb-cprocsp-devel-*.noarch.rpm
     fi
 
     # PKCS#11
-    epmi lsb-cprocsp-pkcs11-64-5.*.x86_64.rpm
+    epmi lsb-cprocsp-pkcs11-64-*.x86_64.rpm
 
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
     epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp libpangox-compat opensc pcsc-lite newt52
-    epmi cprocsp-rdr-rutoken-64-5.*.x86_64.rpm cprocsp-rdr-pcsc-64-5.*.x86_64.rpm || fatal
+    epmi cprocsp-rdr-rutoken-64-*.x86_64.rpm cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
 
     epmi libgtk+2 libSM
-    epmi cprocsp-cptools-gtk-64-5.*.x86_64.rpm
-    epmi cprocsp-rdr-gui-gtk-64-5.*.x86_64.rpm
+    epmi cprocsp-cptools-gtk-64-*.x86_64.rpm
+    epmi cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
     cd -
     # needed for unstalled
     # rm -rfv linux-amd64
@@ -142,30 +142,30 @@ if [ -n "$INSTALL32" ] ; then
     install_lsb32 || fatal
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
-        epmi cprocsp-curl-5.*.i686.rpm cprocsp-rdr-rutoken-5.*.i686.rpm lsb-cprocsp-rdr-5.*.i686.rpm \
-             lsb-cprocsp-kc1-5.*.i686.rpm lsb-cprocsp-capilite-5.*.i686.rpm cprocsp-rdr-pcsc-5.*.i686.rpm
+        epmi cprocsp-curl-*.i686.rpm cprocsp-rdr-rutoken-*.i686.rpm lsb-cprocsp-rdr-*.i686.rpm \
+             lsb-cprocsp-kc1-*.i686.rpm lsb-cprocsp-capilite-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm
     else
         $SUDO i586 bash ./install.sh || fatal
     fi
 
     if [ -n "$DEVEL" ] ; then
-         epmi lsb-cprocsp-devel-5.*.noarch.rpm
+         epmi lsb-cprocsp-devel-*.noarch.rpm
     fi
 
     # PKCS#11
-    epmi lsb-cprocsp-pkcs11-5.*.i686.rpm
+    epmi lsb-cprocsp-pkcs11-*.i686.rpm
 
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
     epmi i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp i586-libpangox-compat || fatal
     # TODO: install if not both?
     #opensc pcsc-lite newt52 || fatal
-    # epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp 
-    epmi cprocsp-rdr-rutoken-5.*.i686.rpm cprocsp-rdr-pcsc-5.*.i686.rpm || fatal
+    # epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
+    epmi cprocsp-rdr-rutoken-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
     epmi i586-libgtk+2 i586-libSM
-    epmi cprocsp-cptools-gtk-5.*.i686.rpm
-    epmi cprocsp-rdr-gui-gtk-5.*.i686.rpm
+    epmi cprocsp-cptools-gtk-*.i686.rpm
+    epmi cprocsp-rdr-gui-gtk-*.i686.rpm
     cd -
     # needed for uninstall
     # rm -rfv linux-ia32
