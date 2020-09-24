@@ -77,6 +77,12 @@ install_lsb32()
     esac
 }
 
+DEVEL=''
+if [ "$1" = "--devel" ] ; then
+    DEVEL=1
+    shift
+fi
+
 INSTALL32=''
 INSTALL64=''
 case "$1" in
@@ -107,6 +113,11 @@ if [ -n "$INSTALL64" ] ; then
     install_lsb64 || fatal
     $SUDO bash ./install.sh || fatal
 
+
+    if [ -n "$DEVEL" ] ; then
+         epmi lsb-cprocsp-devel-5.*.noarch.rpm
+    fi
+
     # PKCS#11
     epmi lsb-cprocsp-pkcs11-64-5.*.x86_64.rpm
 
@@ -135,6 +146,10 @@ if [ -n "$INSTALL32" ] ; then
              lsb-cprocsp-kc1-5.*.i686.rpm lsb-cprocsp-capilite-5.*.i686.rpm cprocsp-rdr-pcsc-5.*.i686.rpm
     else
         $SUDO i586 bash ./install.sh || fatal
+    fi
+
+    if [ -n "$DEVEL" ] ; then
+         epmi lsb-cprocsp-devel-5.*.noarch.rpm
     fi
 
     # PKCS#11

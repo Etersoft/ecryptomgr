@@ -1,11 +1,12 @@
 
 Используйте
- ./install_cryptopro.sh 32|64|both
+ ./install_cryptopro.sh [--devel] 32|64|both
 для установки 32-битной, 64-битной версии, или both для установки обеих версий (рекомендуется).
 
 Для удаления:
  ./uninstall_cryptopro.sh 32|64|both
 
+--devel устанавливает средства разработки (devel-пакеты)
 
 TODO:
 install.sh вызывает uninstall, если видит, что пакеты уже установлены:
