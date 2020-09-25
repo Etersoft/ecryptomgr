@@ -58,7 +58,10 @@ install_lsb32()
             # HACK:
             epm assure eget
 
+            # for install deps
+            epmi i586-lsb-core
             epme i586-lsb-core --nodeps
+
             # FIXME: --force and apt-get are incompatible
             # epmi download: use apt-get after download
             #epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
@@ -70,6 +73,8 @@ install_lsb32()
             # HACK:
             epm assure eget
 
+            # for install deps
+            epmi i586-lsb-core
             epme i586-lsb-core --nodeps
             #epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
             eget http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
