@@ -32,7 +32,7 @@ esac
 if [ -n "$INSTALL64" ] ; then
 
     # ruToken support
-    epme i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp
+    epme pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
     epme cprocsp-rdr-rutoken-64 cprocsp-rdr-pcsc-64
 
     if cd linux-amd64 ; then
