@@ -179,6 +179,9 @@ if [ -n "$INSTALL32" ] ; then
          epmi lsb-cprocsp-devel-*.noarch.rpm
     fi
 
+    epmi i586-glibc-nss i586-glibc-gconv-modules
+    epm installed sssd-client && epmi i586-sssd-client
+
     # PKCS#11
     epmi lsb-cprocsp-pkcs11-*.i686.rpm
 
