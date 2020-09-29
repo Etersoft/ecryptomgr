@@ -17,15 +17,17 @@ info()
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $ ecryptomgr install|remove|clean|status|test [--devel] [cprocsp|itcs] [32|64|both]
+Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [cprocsp|itcs] [32|64|both]
 
-Just run this script in a dir with crypto provider distro.
+Download crypto provider distro and run ecryptomgr install with args
+
 Supported:
 * CryptoPro
 * ViPNet CSP
 
 Example:
  $ ecryptomgr install cprocsp both
+ $ ecryptomgr install itcs 32
 EOF
     exit
 fi
@@ -45,7 +47,7 @@ case "$2" in
         CPROV="itcs"
         ;;
     *)
-        fatal "Unknown provider $2"
+        fatal "Unknown provider $2. Run with --help."
         ;;
 esac
 
@@ -70,6 +72,9 @@ case $1 in
     status)
             $SDIR/status_$CPROV.sh $ARCH
         ;;
+    license)
+            $SDIR/license_$CPROV.sh $ARCH
+        ;;
     test|check)
             $SDIR/test_$CPROV.sh $ARCH
         ;;
@@ -77,6 +82,6 @@ case $1 in
         fatal "TODO: AI. run with --help"
         ;;
     *)
-        fatal "Unknown command $1"
+        fatal "Unknown command $1. Run with --help"
 esac
 
