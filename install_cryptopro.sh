@@ -141,7 +141,15 @@ if [ -n "$INSTALL64" ] ; then
 
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
-    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp libpangox-compat opensc pcsc-lite newt52
+    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
+    epmi libpangox-compat opensc newt52
+    # TODO:
+    # Почему у нас токены через pcscd?
+    # Зачем тогда cprocsp-rdr-rutoken ?
+    # Какие пакеты нужны для токена? Отделить отсюда?
+    # Ответ: Современные аппаратные и программно-аппаратные хранилища ключей, такие как Рутокен ЭЦП или eSmart ГОСТ, поддерживаются через интерфейс PCSC
+    epmi pcsc-lite
+    serv pcscd on
     epmi cprocsp-rdr-rutoken-64-*.x86_64.rpm cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
 
     epmi libgtk+2 libSM
