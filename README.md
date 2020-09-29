@@ -1,4 +1,7 @@
 
+Common utility:
+ $ ecryptomgr install|uninstall|clean|status [cprocsp|itcs] [32|64|both]
+
 Используйте
  ./install_cryptopro.sh [--devel] 32|64|both
 для установки 32-битной, 64-битной версии, или both для установки обеих версий (рекомендуется).
@@ -23,5 +26,3 @@ Astra
 
 TODO: --gui
 
-TODO: common utility with command:
- $ cryptomgr install|uninstall|clean|status [cprocsp|itcs] [32|64|both]
