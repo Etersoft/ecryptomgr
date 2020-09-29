@@ -1,6 +1,6 @@
 
 Common utility:
- $ ecryptomgr install|uninstall|clean|status [cprocsp|itcs] [32|64|both]
+ $ ecryptomgr install|uninstall|clean|status [--devel] [cprocsp|itcs] [32|64|both]
 
 Используйте
  ./install_cryptopro.sh [--devel] 32|64|both

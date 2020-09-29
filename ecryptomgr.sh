@@ -17,7 +17,7 @@ info()
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $ ecryptomgr install|remove|clean|status|test [cprocsp|itcs] [32|64|both]
+Usage: $ ecryptomgr install|remove|clean|status|test [--devel] [cprocsp|itcs] [32|64|both]
 
 Just run this script in a dir with crypto provider distro.
 Supported:
@@ -29,6 +29,9 @@ Example:
 EOF
     exit
 fi
+
+DEVEL=''
+[ "$2" = "--devel" ] && DEVEL="$2" && shift
 
 # TODO: detect by files in the current dir
 # second arg
@@ -56,7 +59,7 @@ done
 # first arg
 case $1 in
     install)
-            $SDIR/install_$CPROV.sh $ARCH
+            $SDIR/install_$CPROV.sh $DEVEL $ARCH
         ;;
     remove|uninstall)
             $SDIR/uninstall_$CPROV.sh $ARCH
