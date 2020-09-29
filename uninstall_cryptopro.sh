@@ -33,10 +33,12 @@ if [ -n "$INSTALL64" ] ; then
 
     # ruToken support
     epme pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
-    epme cprocsp-rdr-rutoken-64 cprocsp-rdr-pcsc-64
+    epme cprocsp-rdr-rutoken-64
+    epme cprocsp-rdr-pcsc-64
 
     if cd linux-amd64 ; then
         $SUDO bash ./uninstall.sh
+        cd -
     fi
 
     # TODO: GUI
@@ -48,10 +50,12 @@ if [ -n "$INSTALL32" ] ; then
 
     # ruToken support
     epme i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp
-    epme cprocsp-rdr-rutoken cprocsp-rdr-pcsc
+    epme cprocsp-rdr-rutoken
+    epme cprocsp-rdr-pcsc
 
     if cd linux-ia32 ; then
         $SUDO i586 bash ./uninstall.sh
+        cd -
     fi
 
     # TODO: GUI
