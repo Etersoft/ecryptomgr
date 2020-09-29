@@ -11,7 +11,7 @@ fatal()
 
 
 echo "All cert store will be cleaned!"
-[ "$1" != "--sure] || fatal "Run with --sure to real cleaning."
+[ "$1" != "--sure" ] || fatal "Run with --sure to real cleaning."
 
 ./uninstall_itcs.sh both
 
