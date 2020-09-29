@@ -35,8 +35,9 @@ if [ -n "$INSTALL64" ] ; then
     epme i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp
     epme cprocsp-rdr-rutoken-64 cprocsp-rdr-pcsc-64
 
-    cd linux-amd64 || fatal
-    $SUDO bash ./uninstall.sh || fatal
+    if cd linux-amd64 ; then
+        $SUDO bash ./uninstall.sh
+    fi
 
     # TODO: GUI
     # epme i586-libgtk+2 i586-libSM
@@ -49,8 +50,9 @@ if [ -n "$INSTALL32" ] ; then
     epme i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp
     epme cprocsp-rdr-rutoken cprocsp-rdr-pcsc
 
-    cd linux-ia32 || fatal
-    $SUDO i586 bash ./uninstall.sh || fatal
+    if cd linux-ia32 ; then
+        $SUDO i586 bash ./uninstall.sh
+    fi
 
     # TODO: GUI
     # epme i586-libgtk+2 i586-libSM
