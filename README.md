@@ -1,8 +1,39 @@
 
-Common utility:
+Crypto Manager — управление криптосредствами в Linux.
+
+Входит в продукт CRYPTO@Etersoft.
+
+Поддерживаются:
+* CryptoPro
+* ViPNet CSP
+
+Текущая версия разработана только для ОС ALT
+
+По проблемам создавайте issue или pull requests в репозитории на github.
+
+== Примеры использования ==
+
+Установите в систему пакет ecryptomgr:
+ # epm install ecryptomgr
+
+=== CryptoPro ===
+
+В каталоге со скаченным архивов, чтобы установить 64-битную версию
+ $ ecryptomgr install cprocsp 64
+
+=== VipNet CSP ===
+
+В каталоге с rpm-пакетами, чтобы установить 32-битную версию
+ $ ecryptomgr install itcs 32
+
+
+Общий формат запуска:
  $ ecryptomgr install|uninstall|clean|license|status [--devel] [cprocsp|itcs] [32|64|both]
 
-Используйте
+=== Низкоуровневые средства ===
+
+Можно непосредственно использовать скрипты
+
  ./install_cryptopro.sh [--devel] 32|64|both
 для установки 32-битной, 64-битной версии, или both для установки обеих версий (рекомендуется).
 
@@ -11,6 +42,7 @@ Common utility:
 
 --devel устанавливает средства разработки (devel-пакеты)
 
+=== TODO ===
 
 TODO:
 install.sh вызывает uninstall, если видит, что пакеты уже установлены:
