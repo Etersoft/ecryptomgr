@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Crypto provider installer
@@ -42,5 +42,11 @@ done
 %sdir/
 
 %changelog
+* Thu Oct 01 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- add license check support
+- unstall_cryptopro.sh: test and fix
+- fix install/uninstall CryptoPro on i586
+- install_itcs.sh: install libqt4-gui for 32 over 64
+
 * Wed Sep 30 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Sisyphus
