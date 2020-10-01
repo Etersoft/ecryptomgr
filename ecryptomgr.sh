@@ -63,6 +63,9 @@ case "$2" in
     itcs|vipnet)
         CPROV="itcs"
         ;;
+    "")
+        fatal "Run with --help."
+        ;;
     *)
         fatal "Unknown provider $2. Run with --help."
         ;;
@@ -71,10 +74,23 @@ esac
 # TODO: detect by files in the current dir and current arch
 # third arg
 ARCH=""
+case "$(distro_info -a)" in
+    x86_64)
+        ARCH=64
+        ;;
+    i586)
+        ARCH=32
+        ;;
+    default)
+        echo "Note: arch $(distro_info -a) is not autodetected."
+        ;;
+esac
+
 for i in 32 64 both ; do
     [ "$3" = "$i" ] && ARCH=$3
 done
 
+echo "Do $1 for $ARCH ..."
 # first arg
 case $1 in
     install)
