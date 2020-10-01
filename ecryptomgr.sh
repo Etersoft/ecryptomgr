@@ -19,13 +19,30 @@ if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
 Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [cprocsp|itcs] [32|64|both]
 
-Download crypto provider distro and run ecryptomgr install with args
+Commands:
+    install - install crypto provider
+    remove - uninstall crypto provider
+    clean - remove old files after uninstall (wipe all related data)
+    license - check license status
+    status - check if crypto provider is installed
+    test - run test (in development)
 
-Supported:
-* CryptoPro
-* ViPNet CSP
+Crypto providers:
+    cprocsp - CryptoPro
+    itcs - ViPNet CSP
 
-Example:
+Options:
+    --devel - install development packages too
+
+Arch:
+    32 - i586 packages (does not matter you have 32 or 64 bit OS)
+    64 - x86_64 packages
+    both - install both 32 and 64 bit (not supported yet for ViPNet CSP)
+
+Download crypto provider distro files and run ecryptomgr install command with a appropiate args
+
+Examples:
+ $ ecryptomgr install cprocsp
  $ ecryptomgr install cprocsp both
  $ ecryptomgr install itcs 32
 EOF

@@ -30,6 +30,37 @@ Crypto Manager — управление криптосредствами в Linu
 Общий формат запуска:
  $ ecryptomgr install|uninstall|clean|license|status [--devel] [cprocsp|itcs] [32|64|both]
 
+Commands:
+    install - install crypto provider
+    remove - uninstall crypto provider
+    clean - remove old files after uninstall (wipe all related data)
+    license - check license status
+    status - check if crypto provider is installed
+    test - run test (in development)
+
+Crypto providers:
+    cprocsp - CryptoPro
+    itcs - ViPNet CSP
+
+Options:
+    --devel - install development packages too
+
+Arch:
+    32 - i586 packages (does not matter you have 32 or 64 bit OS)
+    64 - x86_64 packages
+    both - install both 32 and 64 bit (not supported yet for ViPNet CSP)
+
+Download crypto provider distro files and run ecryptomgr install command with a appropiate args
+
+Examples:
+ $ ecryptomgr install cprocsp
+ $ ecryptomgr install cprocsp both
+ $ ecryptomgr install itcs 32
+
+
+Для самой актуальной справки смотрите
+ $ ecryptomgr --help
+
 === Низкоуровневые средства ===
 
 Можно непосредственно использовать скрипты
