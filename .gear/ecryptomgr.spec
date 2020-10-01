@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Crypto provider installer
@@ -42,6 +42,10 @@ done
 %sdir/
 
 %changelog
+* Thu Oct 01 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
+- improve description
+- ecryptomgr.sh: add arch detection
+
 * Thu Oct 01 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - add license check support
 - unstall_cryptopro.sh: test and fix
