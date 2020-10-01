@@ -6,6 +6,9 @@ LOCALPATH="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
 # TODO: only if not root
 SUDO=sudo
 
+BIARCH=''
+[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+
 fatal()
 {
     echo "FATAL: $*" >&2
@@ -47,44 +50,40 @@ install_lsb32()
             ;;
     esac
 
+    if [ -z "$BIARCH" ] ; then
+        epmi lsb-core
+        return
+    fi
+
     # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=38855
     # Следующие пакеты имеют неудовлетворенные зависимости:
     #    lsb-cprocsp-rdr.32bit: Для установки требует: lsb-core-ia32 (>= 3.0) но пакет не может быть установлен
+
+    # HACK:
+    epm assure eget
+
+    # for install deps
+    epmi lsb-core
+    epme i586-lsb-core --nodeps
+
     case $(distro_info -v) in
         Sisyphus)
-            fatal "TODO: unsupported"
+            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/Sisyphus/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
             ;;
         p9)
-            # HACK:
-            epm assure eget
-
-            # for install deps
-            epmi i586-lsb-core
-            epme i586-lsb-core --nodeps
-
-            # FIXME: --force and apt-get are incompatible
-            # epmi download: use apt-get after download
-            #epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
-            eget http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
-            epme lsb-core --nodeps
-            epmi lsb-core-4.0-alt12.i586.rpm
+            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
             ;;
         p8)
-            # HACK:
-            epm assure eget
-
-            # for install deps
-            epmi i586-lsb-core
-            epme i586-lsb-core --nodeps
-            #epmi http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
-            eget http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
-            epme lsb-core --nodeps
-            epmi lsb-core-4.0-alt5.i586.rpm
+            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
             ;;
         *)
             fatal "$(distro_info -e) is not yet supported"
             ;;
     esac
+
+    eget $LSBCOREURL
+    epme lsb-core --nodeps
+    epmi $(basename $LSBCOREURL)
 }
 
 DEVEL=''
@@ -187,21 +186,25 @@ if [ -n "$INSTALL32" ] ; then
          epmi lsb-cprocsp-devel-*.noarch.rpm
     fi
 
-    epmi i586-glibc-nss i586-glibc-gconv-modules
-    epm installed sssd-client && epmi i586-sssd-client
+    if [ -n "$BIARCH" ] ; then
+        epmi i586-glibc-nss i586-glibc-gconv-modules
+        epm installed sssd-client && epmi i586-sssd-client
+    fi
 
     # PKCS#11
     epmi lsb-cprocsp-pkcs11-*.i686.rpm
 
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
-    epmi i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp i586-libpangox-compat || fatal
+    epmi ${BIARCH}pcsc-lite-rutokens ${BIARCH}pcsc-lite-ccid ${BIARCH}librtpkcs11ecp ${BIARCH}libpangox-compat || fatal
     # TODO: install if not both?
     #opensc pcsc-lite newt52 || fatal
     # epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
     epmi cprocsp-rdr-rutoken-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
-    epmi i586-libgtk+2 i586-libSM
+    if [ -n "$BIARCH" ] ; then
+        epmi i586-libgtk+2 i586-libSM
+    fi
     epmi cprocsp-cptools-gtk-*.i686.rpm
     epmi cprocsp-rdr-gui-gtk-*.i686.rpm
     cd -

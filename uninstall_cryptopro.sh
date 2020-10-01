@@ -1,7 +1,13 @@
 #!/bin/sh
 
+# TODO: fix epme uninstalled packed
+
 # TODO: only if not root
 SUDO=sudo
+
+BIARCH=''
+[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+
 
 fatal()
 {
@@ -49,7 +55,7 @@ fi
 if [ -n "$INSTALL32" ] ; then
 
     # ruToken support
-    epme i586-pcsc-lite-rutokens i586-pcsc-lite-ccid i586-librtpkcs11ecp
+    epme ${BIARCH}pcsc-lite-rutokens ${BIARCH}pcsc-lite-ccid ${BIARCH}librtpkcs11ecp
     epme cprocsp-rdr-rutoken
     epme cprocsp-rdr-pcsc
 
