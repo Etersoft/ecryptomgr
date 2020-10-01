@@ -5,6 +5,9 @@
 # TODO: only if not root
 SUDO=sudo
 
+BIARCH=''
+[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+
 fatal()
 {
     echo "FATAL: $*" >&2
@@ -89,6 +92,7 @@ install_itcs()
     fi
 
     if [ -n "$GUI" ] ; then
+        [ -n "$BIARCH" ] && epmi libqt4-gui
         $EPMI itcs-csp-gost-gui-4.*.$ARCH.rpm \
               itcs-entropy-gost-gui-4.*.$ARCH.rpm \
               itcs-winapi-gui-4.*.$ARCH.rpm || fatal
