@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Crypto provider installer
@@ -22,6 +22,8 @@ run
 Supported:
  * CryptoPro 4/5 64/32 bit
  * ViPNet CSP 4.2/4.4 64/32 bit
+ * ruToken 64/32 bit
+ * Jacarta 64/32 bit
 
 %prep
 %setup
@@ -42,6 +44,12 @@ done
 %sdir/
 
 %changelog
+* Fri Oct 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
+- update README.md
+- separate rutoken control
+- add JaCarta support
+- install_itcs.sh: rewrite to improve both support
+
 * Thu Oct 01 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
 - improve description
 - ecryptomgr.sh: add arch detection
