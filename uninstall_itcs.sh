@@ -9,14 +9,19 @@ fatal()
     exit 1
 }
 
+BIARCH=''
+[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+
 
 INSTALL32=''
 INSTALL64=''
 case "$1" in
     32)
+        [ -n "$BIARCH" ] && fatal "Only both supported on biarch system"
         INSTALL32="$1"
         ;;
     64)
+        [ -n "$BIARCH" ] && fatal "Only both supported on biarch system"
         INSTALL64="$1"
         ;;
     both)
@@ -37,9 +42,9 @@ if [ "$INSTALL64" = "both" ] ; then
 fi
 
 if [ -n "$INSTALL64" ] ; then
-    $EPME $NOSCRIPTS $(epmqp itcs | grep "^itcs.*x86_64")
+    $EPME $NOSCRIPTS $(epmqp itcs .x86_64)
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    $EPME $NOSCRIPTS $(epmqp itcs | grep "^itcs.*i386")
+    $EPME $NOSCRIPTS $(epmqp itcs .i386)
 fi

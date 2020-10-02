@@ -2,6 +2,8 @@
 
 # see https://www.altlinux.org/ViPNet_CSP
 
+LOCALPATH="/var/ftp/pvt/Windows/Crypto/ViPNet/ViPNet CSP Linux 4.2.10.51042/Комплект пользователя/SOFT/rpm"
+
 # TODO: only if not root
 SUDO=sudo
 
@@ -55,6 +57,26 @@ esac
 #    info "You are already have itcs packages installed. Run uninstall_itcs.sh first (or errors are possible)."
 #fi
 
+# epmi does rpm -Uvh, it replaces arch packages (don't allow two package with the same name and other arches)
+direct_epmi()
+{
+   local EPMI="$SUDO rpm -ivh"
+   echo "$EPMI $*"
+   $EPMI "$@"
+}
+
+# --force removing x86_64 package if installed
+# itcs-entropy-gost:
+#  sudo rpm -ivh --badreloc --relocate /opt/itcs=/opt/itcs32 itcs-entropy-gost-4.4.1.649-1.i386.rpm
+# Подготовка...
+#    пакет itcs-entropy-gost-4.4.1.649-1.i386 уже установлен
+reloc_epmi()
+{
+    local EPMI="$SUDO rpm -ivh --badreloc --relocate /opt/itcs=/opt/itcs32"
+    echo "$EPMI $*"
+    $EPMI "$@"
+}
+
 install_itcs()
 {
     local ARCH=$1
@@ -62,15 +84,19 @@ install_itcs()
     echo
     echo "Installing $ARCH packages ..."
 
-    epmi ${BIARCH}libstdc++6
+    if [ "$ARCH" = "i386" ] ; then
+        epmi --skip-installed ${BIARCH}libstdc++6
+    else
+        epmi --skip-installed libstdc++6
+    fi
 
     if ! ls -1 | grep -q "^itcs-licensing-.*.$ARCH.rpm" ; then
         fatal "Can't find itcs $ARCH.rpm packages in the current dir $pwd. Run me in the distro dir"
     fi
 
-    EPMI="epmi"
-    if [ "$INSTALL32" = "both" ] ; then
-        EPMI="$SUDO rpm -ivh --force --badreloc --relocate /opt/itcs=/opt/itcs32"
+    EPMI="direct_epmi"
+    if [ -n "$BIARCH" ] && [ "$ARCH" = "i386" ] ; then
+        EPMI="reloc_epmi"
     fi
 
     $EPMI itcs-licensing-*.$ARCH.rpm || fatal
@@ -94,7 +120,8 @@ install_itcs()
     fi
 
     if [ -n "$GUI" ] ; then
-        [ -n "$BIARCH" ] && epmi libqt4-gui
+        [ "$ARCH" = "i386" ] && [ -n "$BIARCH" ] && epmi --skip-installed ${BIARCH}libqt4-gui
+
         $EPMI itcs-csp-gost-gui-4.*.$ARCH.rpm \
               itcs-entropy-gost-gui-4.*.$ARCH.rpm \
               itcs-winapi-gui-4.*.$ARCH.rpm || fatal
@@ -103,14 +130,15 @@ install_itcs()
     if [ -n "$DEVEL" ] ; then
          epmi itcs-csp-dev-*.noarch.rpm || fatal
     fi
-
-
 }
+
+[ -d "$LOCALPATH" ] && cd "$LOCALPATH"
 
 if [ -n "$INSTALL64" ] ; then
     install_itcs x86_64
 fi
 
+echo "Info: on biarch system we install files in another dir, so will use 64 bit utilities from install scripts"
 if [ -n "$INSTALL32" ] ; then
     install_itcs i386
 fi
