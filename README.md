@@ -6,6 +6,7 @@
 Поддерживаются:
 * CryptoPro
 * ViPNet CSP
+* ruToken
 
 Текущая версия разработана только для ОС ALT.
 
@@ -28,12 +29,12 @@
 
 
 ## Общий формат запуска
- $ ecryptomgr install|uninstall|clean|license|status [--devel] [cprocsp|itcs] [32|64|both]
+ $ ecryptomgr install|uninstall|clean|license|status [--devel] [cprocsp|itcs|rutoken] [32|64|both]
 
 Commands:
 * install — install crypto provider
 * remove — uninstall crypto provider
-* clean → remove old files after uninstall (wipe all related data)
+* clean — remove old files after uninstall (wipe all related data)
 * license — check license status
 * status — check if crypto provider is installed
 * test — run test (in development)
@@ -41,6 +42,8 @@ Commands:
 Crypto providers:
 * cprocsp — CryptoPro
 * itcs — ViPNet CSP
+* rutoken - ruToken
+
 (в планах сделать автоопределение по файлам в текущем каталоге)
 
 Options:
@@ -75,6 +78,9 @@ Examples:
 # TODO
 
 копировать install.sh в систпму при установке или отказаться от него, чтобы удаление не требовало дистрибутива.
+
+TODO:
+epme вызывает apt-get remove для пакетов, которых нет при удалении через rpm
 
 TODO:
 install.sh вызывает uninstall, если видит, что пакеты уже установлены:

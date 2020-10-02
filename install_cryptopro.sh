@@ -128,6 +128,8 @@ if [ -n "$INSTALL64" ] ; then
     echo
     echo "Installing x86_64 packages ..."
 
+    epmi libpango
+
     $SUDO bash ./install.sh || fatal
 
 
@@ -138,17 +140,6 @@ if [ -n "$INSTALL64" ] ; then
     # PKCS#11
     epmi lsb-cprocsp-pkcs11-64-*.x86_64.rpm
 
-    # ruToken support
-    # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
-    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
-    epmi libpangox-compat opensc newt52
-    # TODO:
-    # Почему у нас токены через pcscd?
-    # Зачем тогда cprocsp-rdr-rutoken ?
-    # Какие пакеты нужны для токена? Отделить отсюда?
-    # Ответ: Современные аппаратные и программно-аппаратные хранилища ключей, такие как Рутокен ЭЦП или eSmart ГОСТ, поддерживаются через интерфейс PCSC
-    epmi pcsc-lite
-    serv pcscd on
     epmi cprocsp-rdr-rutoken-64-*.x86_64.rpm cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
 
     epmi libgtk+2 libSM
@@ -174,6 +165,8 @@ if [ -n "$INSTALL32" ] ; then
     echo
     echo "Installing i686 packages ..."
 
+    epmi ${BIARCH}libpango
+
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
         epmi cprocsp-curl-*.i686.rpm cprocsp-rdr-rutoken-*.i686.rpm lsb-cprocsp-rdr-*.i686.rpm \
@@ -194,12 +187,6 @@ if [ -n "$INSTALL32" ] ; then
     # PKCS#11
     epmi lsb-cprocsp-pkcs11-*.i686.rpm
 
-    # ruToken support
-    # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
-    epmi ${BIARCH}pcsc-lite-rutokens ${BIARCH}pcsc-lite-ccid ${BIARCH}librtpkcs11ecp ${BIARCH}libpangox-compat || fatal
-    # TODO: install if not both?
-    #opensc pcsc-lite newt52 || fatal
-    # epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
     epmi cprocsp-rdr-rutoken-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
     if [ -n "$BIARCH" ] ; then

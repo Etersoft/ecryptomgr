@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# TODO: fix epme uninstalled packed
-
 # TODO: only if not root
 SUDO=sudo
 
@@ -37,26 +35,12 @@ esac
 
 if [ -n "$INSTALL64" ] ; then
 
-    epme cprocsp-rdr-rutoken-64
-    epme cprocsp-rdr-pcsc-64
-
-    if cd linux-amd64 ; then
-        $SUDO bash ./uninstall.sh
-        cd -
-    fi
-
-    # epme cprocsp-cptools-gtk-64
+    # ruToken support
+    epme pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
 fi
 
 if [ -n "$INSTALL32" ] ; then
 
-    epme cprocsp-rdr-rutoken
-    epme cprocsp-rdr-pcsc
-
-    if cd linux-ia32 ; then
-        $SUDO i586 bash ./uninstall.sh
-        cd -
-    fi
-
-    # epme cprocsp-cptools-gtk
+    # ruToken support
+    epme ${BIARCH}pcsc-lite-rutokens ${BIARCH}pcsc-lite-ccid ${BIARCH}librtpkcs11ecp
 fi

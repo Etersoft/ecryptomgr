@@ -17,7 +17,7 @@ info()
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [cprocsp|itcs] [32|64|both]
+Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [cprocsp|itcs|rutoken] [32|64|both]
 
 Commands:
     install - install crypto provider
@@ -30,6 +30,7 @@ Commands:
 Crypto providers:
     cprocsp - CryptoPro
     itcs - ViPNet CSP
+    rutoken - ruToken
 
 Options:
     --devel - install development packages too
@@ -62,6 +63,9 @@ case "$2" in
         ;;
     itcs|vipnet)
         CPROV="itcs"
+        ;;
+    rutoken|ruToken)
+        CPROV="rutoken"
         ;;
     "")
         fatal "Run with --help."
