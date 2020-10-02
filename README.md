@@ -7,6 +7,7 @@
 * CryptoPro
 * ViPNet CSP
 * ruToken
+* JaCarta
 
 Текущая версия разработана только для ОС ALT.
 
@@ -29,7 +30,7 @@
 
 
 ## Общий формат запуска
- $ ecryptomgr install|uninstall|clean|license|status [--devel] [cprocsp|itcs|rutoken] [32|64|both]
+ $ ecryptomgr install|uninstall|clean|license|status [--devel] [cprocsp|itcs|rutoken|jacarta] [32|64|both]
 
 Commands:
 * install — install crypto provider
@@ -43,6 +44,7 @@ Crypto providers:
 * cprocsp — CryptoPro
 * itcs — ViPNet CSP
 * rutoken - ruToken
+* jacarta - JaCarta
 
 (в планах сделать автоопределение по файлам в текущем каталоге)
 
