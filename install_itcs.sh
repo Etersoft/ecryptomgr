@@ -62,6 +62,8 @@ install_itcs()
     echo
     echo "Installing $ARCH packages ..."
 
+    epmi ${BIARCH}libstdc++6
+
     if ! ls -1 | grep -q "^itcs-licensing-.*.$ARCH.rpm" ; then
         fatal "Can't find itcs $ARCH.rpm packages in the current dir $pwd. Run me in the distro dir"
     fi
