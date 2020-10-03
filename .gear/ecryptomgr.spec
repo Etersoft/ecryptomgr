@@ -1,11 +1,12 @@
 Name: ecryptomgr
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Crypto provider installer
 
 License: Public domain
 Group: File tools
+Url: https://github.com/Etersoft/ecryptomgr
 
 Source: %name-%version.tar
 
@@ -15,6 +16,7 @@ BuildArch: noarch
 
 %description
 Crypto provider installer.
+Part of CRYPTO@Etersoft project.
 
 run
  $ crypto-install in a dir with downloaded crypto provider distribute.
@@ -44,6 +46,11 @@ done
 %sdir/
 
 %changelog
+* Sat Oct 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- add test_jacarta.sh
+- newt52 provides whiptail for unused install-gui.sh
+- add --nogui option, allow any position for --devel
+
 * Fri Oct 02 2020 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - update README.md
 - separate rutoken control
