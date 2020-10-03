@@ -128,6 +128,8 @@ if [ -n "$INSTALL64" ] ; then
     echo
     echo "Installing x86_64 packages ..."
 
+    # whiptail for install-gui.sh
+    # epmi newt52
     epmi libpango
 
     $SUDO bash ./install.sh || fatal

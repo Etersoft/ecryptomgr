@@ -63,9 +63,6 @@ if [ -n "$INSTALL32" ] ; then
     epmi ${BIARCH}pcsc-lite-rutokens ${BIARCH}pcsc-lite-ccid ${BIARCH}librtpkcs11ecp
 fi
 
-# Кто использует?
-#epmi newt52
-
 epmi opensc
 epmi pcsc-lite
 
