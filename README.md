@@ -30,7 +30,7 @@
 
 
 ## Общий формат запуска
- $ ecryptomgr install|uninstall|clean|license|status [--devel] [cprocsp|itcs|rutoken|jacarta] [32|64|both]
+ $ ecryptomgr install|uninstall|clean|license|status [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta] [32|64|both]
 
 Commands:
 * install — install crypto provider
@@ -50,6 +50,7 @@ Crypto providers:
 
 Options:
 * --devel — устанавливает средства разработки (devel-пакеты)
+* --nogui — не устанавливает графические утилиты
 
 Arch (autodetected if omit)
 * 32 - i586 packages (does not matter you have 32 or 64 bit OS)
@@ -95,6 +96,3 @@ TODO:
 Роса:
 http://wiki.rosalab.ru/ru/index.php/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F_%D0%BF%D0%BE_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B5_%D0%9A%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%9F%D1%80%D0%BE
 Astra
-
-TODO: --gui (сейчас по умолчанию)
-

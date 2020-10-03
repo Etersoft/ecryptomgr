@@ -22,18 +22,10 @@ info()
 }
 
 
-
 DEVEL=''
-if [ "$1" = "--devel" ] ; then
-    DEVEL=1
-    shift
-fi
-
-GUI='default'
-if [ "$1" = "--gui" ] ; then
-    GUI=1
-    shift
-fi
+[ "$1" = "--devel" ] && DEVEL=$1 && shift
+GUI='--gui'
+[ "$1" = "--nogui" ] && GUI='' && shift
 
 INSTALL32=''
 INSTALL64=''
@@ -52,6 +44,10 @@ case "$1" in
     *)
         fatal "Run with 32|64|both param"
 esac
+shift
+
+[ "$1" = "--devel" ] && DEVEL=$1 && shift
+[ "$1" = "--nogui" ] && GUI='' && shift
 
 #if [ -n "$(epmqp itcs)" ] ; then
 #    info "You are already have itcs packages installed. Run uninstall_itcs.sh first (or errors are possible)."
@@ -95,7 +91,7 @@ install_itcs()
     fi
 
     EPMI="direct_epmi"
-    if [ -n "$BIARCH" ] && [ "$ARCH" = "i386" ] ; then
+    if [ "$ARCH" = "i386" ] && [ -n "$BIARCH" ] && [ -n "$INSTALL64" ] ; then
         EPMI="reloc_epmi"
     fi
 
@@ -120,7 +116,13 @@ install_itcs()
     fi
 
     if [ -n "$GUI" ] ; then
-        [ "$ARCH" = "i386" ] && [ -n "$BIARCH" ] && epmi --skip-installed ${BIARCH}libqt4-gui
+        if [ "$ARCH" = "i386" ] && [ -n "$BIARCH" ] ; then
+            epmi --skip-installed ${BIARCH}libqt4-gui
+
+            # QGtkStyle could not resolve GTK. Make sure you have installed the proper libraries.
+            echo "libgtk+2 add segfault to certmgr-gui, so remove it"
+            epme ${BIARCH}libgtk+2
+        fi
 
         $EPMI itcs-csp-gost-gui-4.*.$ARCH.rpm \
               itcs-entropy-gost-gui-4.*.$ARCH.rpm \

@@ -87,10 +87,9 @@ install_lsb32()
 }
 
 DEVEL=''
-if [ "$1" = "--devel" ] ; then
-    DEVEL=1
-    shift
-fi
+[ "$1" = "--devel" ] && DEVEL=$1 && shift
+GUI='--gui'
+[ "$1" = "--nogui" ] && GUI='' && shift
 
 INSTALL32=''
 INSTALL64=''
@@ -108,6 +107,11 @@ case "$1" in
     *)
         fatal "Run with 32|64|both param"
 esac
+shift
+
+# TODO: improve
+[ "$1" = "--devel" ] && DEVEL=$1 && shift
+[ "$1" = "--nogui" ] && GUI='' && shift
 
 if [ -n "$(epmqp cprocsp)" ] ; then
     info "You are already have cprocsp packages installed. Run uninstall_cryptopro.sh first (or errors are possible)."
@@ -130,7 +134,6 @@ if [ -n "$INSTALL64" ] ; then
 
     # whiptail for install-gui.sh
     # epmi newt52
-    epmi libpango
 
     $SUDO bash ./install.sh || fatal
 
@@ -144,9 +147,14 @@ if [ -n "$INSTALL64" ] ; then
 
     epmi cprocsp-rdr-rutoken-64-*.x86_64.rpm cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
 
-    epmi libgtk+2 libSM
-    epmi cprocsp-cptools-gtk-64-*.x86_64.rpm
-    epmi cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
+    if [ -n "$GUI" ] ; then
+        epmi libpango
+
+        epmi libgtk+2 libSM
+        epmi cprocsp-cptools-gtk-64-*.x86_64.rpm
+        epmi cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
+    fi
+
     cd -
     # needed for unstalled
     # rm -rfv linux-amd64
@@ -167,11 +175,9 @@ if [ -n "$INSTALL32" ] ; then
     echo
     echo "Installing i686 packages ..."
 
-    epmi ${BIARCH}libpango
-
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
-        epmi cprocsp-curl-*.i686.rpm cprocsp-rdr-rutoken-*.i686.rpm lsb-cprocsp-rdr-*.i686.rpm \
+        epmi cprocsp-curl-*.i686.rpm cprocsp-rdr-rutoken-*.i686.rpm lsb-cprocsp-rdr-[45]*.i686.rpm \
              lsb-cprocsp-kc1-*.i686.rpm lsb-cprocsp-capilite-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm
     else
         $SUDO i586 bash ./install.sh || fatal
@@ -191,11 +197,13 @@ if [ -n "$INSTALL32" ] ; then
 
     epmi cprocsp-rdr-rutoken-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
-    if [ -n "$BIARCH" ] ; then
-        epmi i586-libgtk+2 i586-libSM
+    if [ -n "$GUI" ] ; then
+        epmi --skip-installed ${BIARCH}libpango ${BIARCH}libgtk+2 ${BIARCH}libSM
+
+        epmi cprocsp-cptools-gtk-*.i686.rpm
+        epmi cprocsp-rdr-gui-gtk-*.i686.rpm
     fi
-    epmi cprocsp-cptools-gtk-*.i686.rpm
-    epmi cprocsp-rdr-gui-gtk-*.i686.rpm
+
     cd -
     # needed for uninstall
     # rm -rfv linux-ia32

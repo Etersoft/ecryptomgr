@@ -17,7 +17,7 @@ info()
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [cprocsp|itcs|rutoken|jacarta] [32|64|both]
+Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta] [32|64|both]
 
 Commands:
     install - install crypto provider
@@ -35,10 +35,11 @@ Crypto providers:
 
 Options:
     --devel - install development packages too
+    --nogui - don't install gui packages
 
 Arch:
-    32 - i586 packages (does not matter you have 32 or 64 bit OS)
-    64 - x86_64 packages
+      32 - i586 packages (does not matter you have 32 or 64 bit OS)
+      64 - x86_64 packages
     both - install both 32 and 64 bit (not supported yet for ViPNet CSP)
 
 Download crypto provider distro files and run ecryptomgr install command with a appropiate args
@@ -46,19 +47,24 @@ Download crypto provider distro files and run ecryptomgr install command with a 
 Examples:
  $ ecryptomgr install cprocsp
  $ ecryptomgr install cprocsp both
- $ ecryptomgr install itcs 32
+ $ ecryptomgr install --devel itcs 32
 EOF
     exit
 fi
 
+COMMAND="$1" && shift
+
 DEVEL=''
-[ "$2" = "--devel" ] && DEVEL="$2" && shift
+[ "$1" = "--devel" ] && DEVEL="$1" && shift
+GUI=''
+[ "$1" = "--nogui" ] && GUI="$1" && shift
+
 
 # TODO: detect by files in the current dir
 # second arg
 # TODO: change to cprocsp
 CPROV=cryptopro
-case "$2" in
+case "$1" in
     cprocsp|cryptopro)
         CPROV="cryptopro"
         ;;
@@ -75,9 +81,10 @@ case "$2" in
         fatal "Run with --help."
         ;;
     *)
-        fatal "Unknown provider $2. Run with --help."
+        fatal "Unknown provider $1. Run with --help."
         ;;
 esac
+shift
 
 # TODO: detect by files in the current dir and current arch
 # third arg
@@ -86,7 +93,7 @@ case "$(distro_info -a)" in
     x86_64)
         ARCH=64
         ;;
-    i586)
+    x86)
         ARCH=32
         ;;
     default)
@@ -95,14 +102,17 @@ case "$(distro_info -a)" in
 esac
 
 for i in 32 64 both ; do
-    [ "$3" = "$i" ] && ARCH=$3
+    [ "$1" = "$i" ] && ARCH=$1
 done
 
-echo "Do $1 for $ARCH ..."
+[ "$1" = "--devel" ] && DEVEL="$1" && shift
+[ "$1" = "--nogui" ] && GUI="$1" && shift
+
+echo "Do $COMMAND $CPROV for $ARCH ..."
 # first arg
-case $1 in
+case $COMMAND in
     install)
-            $SDIR/install_$CPROV.sh $DEVEL $ARCH
+            $SDIR/install_$CPROV.sh $DEVEL $GUI $ARCH
         ;;
     remove|uninstall)
             $SDIR/uninstall_$CPROV.sh $ARCH
@@ -123,6 +133,6 @@ case $1 in
         fatal "TODO: AI. run with --help"
         ;;
     *)
-        fatal "Unknown command $1. Run with --help"
+        fatal "Unknown command $COMMAND. Run with --help"
 esac
 
