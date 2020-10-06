@@ -116,6 +116,8 @@ install_itcs()
     fi
 
     if [ -n "$GUI" ] ; then
+        # libqt4 will provide needed qt = version
+        epmi libqt4 libqt4-gui
         if [ "$ARCH" = "i386" ] && [ -n "$BIARCH" ] ; then
             epmi --skip-installed ${BIARCH}libqt4-gui
 
