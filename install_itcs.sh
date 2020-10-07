@@ -2,7 +2,10 @@
 
 # see https://www.altlinux.org/ViPNet_CSP
 
-LOCALPATH="/var/ftp/pvt/Windows/Crypto/ViPNet/ViPNet CSP Linux 4.2.10.51042/Комплект пользователя/SOFT/rpm"
+# TODO: since vipnetcsp_pkg_manager.sh
+
+LOCALPATH="/opt/distr/VipNet"
+LOCALPATH2="/var/ftp/pvt/Windows/Crypto/ViPNet/ViPNet CSP Linux 4.2.10.51042/Комплект пользователя/SOFT/rpm"
 
 # TODO: only if not root
 SUDO=sudo
@@ -19,6 +22,16 @@ fatal()
 info()
 {
     echo "$*"
+}
+
+get_distr_dir()
+{
+    local i
+    for i in "$LOCALPATH" "$LOCALPATH2" . ; do
+        #ls -1 "$i" | grep -q "^$1$" && echo "$i" && return
+        ls "$i"/$1 2>/dev/null >/dev/null && echo "$i" && return
+    done
+    return 1
 }
 
 
@@ -136,7 +149,8 @@ install_itcs()
     fi
 }
 
-[ -d "$LOCALPATH" ] && cd "$LOCALPATH"
+L=$(get_distr_dir "itcs*.rpm") || fatal "Can't find itcs*.rpm in the current dir $(pwd). Download it and put in here or it $LOCALPATH."
+cd "$L"
 
 if [ -n "$INSTALL64" ] ; then
     install_itcs x86_64

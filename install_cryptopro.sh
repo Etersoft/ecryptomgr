@@ -2,7 +2,9 @@
 
 # see https://www.altlinux.org/КриптоПро
 
-LOCALPATH="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
+LOCALPATH="/opt/distr/CryptoPro"
+LOCALPATH2="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
+
 # TODO: only if not root
 SUDO=sudo
 
@@ -20,16 +22,21 @@ info()
     echo "$*"
 }
 
+get_distr_dir()
+{
+    local i
+    for i in "$LOCALPATH" "$LOCALPATH2" . ; do
+        [ -f "$i/$1" ] && echo "$i" && return
+    done
+    return 1
+}
+
 unpack_tgz()
 {
     epm assure erc || fatal
-    local i
-    for i in "$LOCALPATH" . ; do
-        [ -s "$i/$1" ] || continue
-        erc "$i/$1"
-        return
-    done
-    fatal "Can't find $1 in the current dir $(pwd). Download it and put in here,"
+    local ar=$(get_distr_dir $1)
+    [ -z "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or it $LOCALPATH."
+    erc "$ar/$1"
 }
 
 install_lsb64()
