@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # see https://www.altlinux.org/КриптоПро
+# https://support.cryptopro.ru/index.php?/Knowledgebase/Article/View/87/2/ustnovk-kriptopro-csp-n-os-linux--rutoken
 
 # TODO: only if not root
 SUDO=sudo
@@ -47,7 +48,7 @@ if [ -n "$INSTALL64" ] ; then
 
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
-    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp
+    epmi pcsc-lite-rutokens pcsc-lite-ccid librtpkcs11ecp libpcsclite
 
     # TODO:
     # Почему у нас токены через pcscd?
@@ -60,7 +61,7 @@ if [ -n "$INSTALL32" ] ; then
 
     # ruToken support
     # instead of cryptopro-preinstall, see https://www.altlinux.org/КриптоПро#Установка_пакетов
-    epmi ${BIARCH}pcsc-lite-rutokens ${BIARCH}pcsc-lite-ccid ${BIARCH}librtpkcs11ecp
+    epmi ${BIARCH}pcsc-lite-rutokens ${BIARCH}pcsc-lite-ccid ${BIARCH}librtpkcs11ecp ${BIARCH}libpcsclite
 fi
 
 epmi opensc
