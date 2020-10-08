@@ -17,7 +17,7 @@ info()
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta] [32|64|both]
+Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
 
 Commands:
     install - install crypto provider
@@ -32,6 +32,7 @@ Crypto providers:
     itcs - ViPNet CSP
     rutoken - ruToken
     jacarta - JaCarta
+    cades - CryptoPro CAdES Plugin
 
 Options:
     --devel - install development packages too
@@ -76,6 +77,9 @@ case "$1" in
         ;;
     jacarta|JaCarta)
         CPROV="jacarta"
+        ;;
+    cades|cadesplugin)
+        CPROV="cades"
         ;;
     "")
         fatal "Run with --help."

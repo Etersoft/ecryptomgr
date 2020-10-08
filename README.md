@@ -8,6 +8,7 @@
 * ViPNet CSP
 * ruToken
 * JaCarta
+* CAdES Plugin
 
 Текущая версия разработана только для ОС ALT.
 
@@ -32,7 +33,7 @@
 
 
 ## Общий формат запуска
- $ ecryptomgr install|uninstall|clean|license|status [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta] [32|64|both]
+ $ ecryptomgr install|uninstall|clean|license|status [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
 
 Commands:
 * install — install crypto provider
@@ -47,6 +48,7 @@ Crypto providers:
 * itcs — ViPNet CSP
 * rutoken - ruToken
 * jacarta - JaCarta
+* cades - CryptoPro CAdES Plugin
 
 (в планах сделать автоопределение по файлам в текущем каталоге)
 
@@ -81,6 +83,8 @@ Examples:
 
 
 # TODO
+
+TODO: check installed components and print about needed order
 
 копировать install.sh в систпму при установке или отказаться от него, чтобы удаление не требовало дистрибутива.
 
