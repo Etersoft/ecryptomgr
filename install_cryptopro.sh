@@ -35,7 +35,7 @@ unpack_tgz()
 {
     epm assure erc || fatal
     local ar=$(get_distr_dir $1)
-    [ -z "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or it $LOCALPATH."
+    [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or it $LOCALPATH."
     erc "$ar/$1"
 }
 
