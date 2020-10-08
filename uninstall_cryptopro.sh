@@ -38,11 +38,15 @@ esac
 if [ -n "$INSTALL64" ] ; then
 
     epme cprocsp-rdr-rutoken-64
+    epme cprocsp-rdr-jacarta-64
     epme cprocsp-rdr-pcsc-64
 
     if cd linux-amd64 ; then
         $SUDO bash ./uninstall.sh
         cd -
+    else
+        echo "Can't find distro packages, just remove rpms"
+        epme $(epmqp cprocsp-)
     fi
 
     # epme cprocsp-cptools-gtk-64
@@ -51,11 +55,15 @@ fi
 if [ -n "$INSTALL32" ] ; then
 
     epme cprocsp-rdr-rutoken
+    epme cprocsp-rdr-jacarta
     epme cprocsp-rdr-pcsc
 
     if cd linux-ia32 ; then
         $SUDO i586 bash ./uninstall.sh
         cd -
+    else
+        echo "Can't find distro packages, just remove rpms"
+        epme $(epmqp cprocsp-)
     fi
 
     # epme cprocsp-cptools-gtk
