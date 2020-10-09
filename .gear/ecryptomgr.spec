@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Crypto provider installer
@@ -47,6 +47,12 @@ done
 %sdir/
 
 %changelog
+* Fri Oct 09 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- install_cryptopro.sh/install_itcs.sh: don't run if some packages already installed
+- install_cryptopro.sh: add package integrity checking
+- install_cryptopro.sh: cleanup process
+- add tests for cryptopro and itcs integrity
+
 * Fri Oct 09 2020 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
 - install_cryptopro.sh: fix distr dir checking
 - add cadesplugin install support
