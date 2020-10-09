@@ -19,21 +19,21 @@
 ## Примеры использования
 
 Установите в систему пакет ecryptomgr:
- # epm install ecryptomgr
+    # epm install ecryptomgr
 
 ### CryptoPro
 
 В каталоге со скаченным архивов, чтобы установить 64-битную версию
- $ ecryptomgr install cprocsp 64
+    $ ecryptomgr install cprocsp 64
 
 ### VipNet CSP
 
 В каталоге с rpm-пакетами, чтобы установить 32-битную версию
- $ ecryptomgr install itcs 32
+    $ ecryptomgr install itcs 32
 
 
 ## Общий формат запуска
- $ ecryptomgr install|uninstall|clean|license|status [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
+    $ ecryptomgr install|uninstall|clean|license|status [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
 
 Commands:
 * install — install crypto provider
@@ -64,23 +64,27 @@ Arch (autodetected if omit)
 Для установки криптопровайдера загрузите предлагаемые поставщиком файлы и запустите в каталоге с ними команду ecryptmgr с нужными параметрами.
 
 Examples:
- $ ecryptomgr install cprocsp
- $ ecryptomgr install cprocsp both
- $ ecryptomgr install itcs 32
+    $ ecryptomgr install cprocsp
+    $ ecryptomgr install cprocsp both
+    $ ecryptomgr install itcs 32
 
 Для самой актуальной справки смотрите
- $ ecryptomgr --help
+    $ ecryptomgr --help
 
 ### Низкоуровневые средства
 
 Можно непосредственно использовать скрипты
 
- $ ./install_cryptopro.sh [--devel] 32|64|both
+    $ ./install_cryptopro.sh [--devel] 32|64|both
 для установки 32-битной, 64-битной версии, или both для установки обеих версий (рекомендуется).
 
 Для удаления:
- $ ./uninstall_cryptopro.sh 32|64|both
+    $ ./uninstall_cryptopro.sh 32|64|both
 
+### Классы защиты КС1, КС2, КС3
+* КС1 — это базовое программное обеспечение СКЗИ (предполагается, что имеем случайного внешнего нарушителя, который может перехватывать информацию в каналах связи; достаточные требования — математическая стойкость, корректности реализации и качество ключей).
+* КС2 — состоит из базового СКЗИ класса КС1 совместно с сертифицированным аппаратно-программным модулем доверенной загрузки (АПМДЗ).
+* КС3 — состоит из СКЗИ класса КС2 совместно со специализированным программным обеспечением для создания и контроля замкнутой программной среды.
 
 # TODO
 
