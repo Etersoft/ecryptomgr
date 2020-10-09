@@ -196,7 +196,7 @@ if [ -n "$INSTALL32" ] ; then
 
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
-        epmi cprocsp-curl-*.i686.rpm cprocsp-rdr-rutoken-*.i686.rpm lsb-cprocsp-rdr-[45]*.i686.rpm \
+        epmi cprocsp-curl-*.i686.rpm lsb-cprocsp-rdr-[45]*.i686.rpm \
              lsb-cprocsp-kc1-*.i686.rpm lsb-cprocsp-capilite-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm
     else
         $SUDO i586 bash ./install.sh || fatal
@@ -215,13 +215,17 @@ if [ -n "$INSTALL32" ] ; then
     epmi lsb-cprocsp-pkcs11-*.i686.rpm
 
     # TODO: check if the system has rutoken/jacarta supports
-    if epmqp jcPKCS11-2 ; then
+    info "Check if Jacarta support is needed ..."
+    if epm --quiet installed jcPKCS11-2 >/dev/null ; then
         # Note: have brain broken postinstall script
         epmi cprocsp-rdr-jacarta-*.i686.rpm
     fi
-    if epmqp librtpkcs11ecp ; then
+
+    info "Check if ruToken support is needed ..."
+    if epm --quiet installed librtpkcs11ecp >/dev/null ; then
         epmi cprocsp-rdr-rutoken-*.i686.rpm  || fatal
     fi
+
     #if epmqp libpcsclite
     epmi cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
