@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# see https://www.altlinux.org/ViPNet_CSP
+
+# TODO: since vipnetcsp_pkg_manager.sh
+
 # TODO: only if not root
 SUDO=sudo
 
@@ -32,6 +36,7 @@ case "$1" in
         INSTALL64="$1"
         ;;
     both)
+        fatal "Sorry, biarch don't support yet"
         INSTALL32="$1"
         INSTALL64="$1"
         ;;
@@ -63,12 +68,9 @@ check_pkg()
     printf "  %-50s %s" "$PKG" "exists"
 
     if ! epm checkpkg $PKG 2>/dev/null >/dev/null ; then
-#        if [ "$(epm --quiet checkpkg $PKG)" = \
-#            "S.5....T.  c /etc/opt/cprocsp/config64.ini
-#/var/opt/cprocsp/users/global.ini
         echo -en "\b\b\b\b\b\b"
         echo "BRokEN"
-        epm checkpkg $PKG
+        epm checkpkg $QPKG
         return 1
     fi
 
@@ -78,65 +80,64 @@ check_pkg()
 
 
 # TODO: использовать список того, что ставили?
-check_cryptopro()
+check_itcs()
 {
     local ARCH=$1
-    local ARCHSUFFIX=$2
+
     echo
 
-    # TODO: epm print version for
-    VER=$(rpmquery --queryformat="%{version}\n" lsb-cprocsp-base) || fatal "Can't find $lsb-cprocsp-base"
+    NAME=$(epm -q itcs-csp-gost) || fatal "Can't find main package"
+    VER=$(echo "$NAME" | sed -e "s|itcs-csp-gost-\([4-5].[0-9]\)\..*|\1|") #"
 
-    echo "Checking $ARCH cprocsp-* $VER packages ..."
+    echo "Checking $ARCH itcs-* version $VER packages ..."
 
-    check_pkg lsb-cprocsp-base $VER noarch
+    check_pkg itcs-licensing 1 $ARCH
 
-    for i in lsb-cprocsp-pkcs11 cprocsp-rdr-pcsc \
-             cprocsp-curl lsb-cprocsp-rdr \
-             lsb-cprocsp-kc1 lsb-cprocsp-capilite cprocsp-rdr-pcsc ; do
-        check_pkg $i$ARCHSUFFIX $VER $ARCH
+    for i in itcs-winapi itcs-csp-gost \
+             itcs-integrity-check itcs-cryptofile ; do
+        check_pkg $i $VER $ARCH
     done
 
-    if epmqp --quiet jcPKCS11-2 >/dev/null ; then
-        check_pkg cprocsp-rdr-jacarta$ARCHSUFFIX $VER $ARCH
+    if [ "$VER" = "4.4" ] ; then
+        ENTROPYVER="4.5"
+        for i in itcs-pkicmd itcs-known-path; do
+            check_pkg $i $VER $ARCH
+        done
+    else
+        ENTROPYVER="4.4"
     fi
 
-    if epmqp --quiet librtpkcs11ecp >/dev/null ; then
-        check_pkg cprocsp-rdr-rutoken$ARCHSUFFIX $VER $ARCH
-    fi
+    check_pkg itcs-entropy-gost $ENTROPYVER $ARCH
 
-    if [ -n "$DEVEL" ] ; then
-        check_pkg lsb-cprocsp-devel $VER noarch
-    fi
 
     if [ -n "$GUI" ] ; then
-        for i in cprocsp-cptools-gtk cprocsp-rdr-gui-gtk ; do
-            check_pkg $i$ARCHSUFFIX $VER $ARCH
+        check_pkg itcs-entropy-gost-gui $ENTROPYVER $ARCH
+        for i in itcs-csp-gost-gui itcs-winapi-gui ; do
+            check_pkg $i $VER $ARCH
         done
     fi
 
+    if [ -n "$DEVEL" ] ; then
+        for i in itcs-csp-dev ; do
+             check_pkg $i $VER $ARCH
+        done
+    fi
 }
 
 
 if [ -n "$INSTALL64" ] ; then
-    check_cryptopro x86_64 "-64"
+    check_itcs x86_64
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    check_cryptopro i686 ""
+    check_itcs i386
 fi
 
-echo
-info "Checking integrity via /etc/init.d/cprocsp check ..."
-info "TODO: appropriate arch"
-$SUDO /etc/init.d/cprocsp check
-
-test_certmgr()
+logger()
 {
-    [ -x $1 ] || return
-    $1 -list
+    cat
 }
 
-test_certmgr /opt/cprocsp/bin/ia32/certmgr
-
-test_certmgr /opt/cprocsp/bin/amd64/certmgr
+echo
+info "Checking integrity via /opt/itcs/bin/csp_integrity_check.sh ..."
+. /opt/itcs/bin/csp_integrity_check.sh
