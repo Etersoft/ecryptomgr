@@ -19,20 +19,24 @@
 ## Примеры использования
 
 Установите в систему пакет ecryptomgr:
+
     # epm install ecryptomgr
 
 ### CryptoPro
 
 В каталоге со скаченным архивов, чтобы установить 64-битную версию
+
     $ ecryptomgr install cprocsp 64
 
 ### VipNet CSP
 
 В каталоге с rpm-пакетами, чтобы установить 32-битную версию
+
     $ ecryptomgr install itcs 32
 
 
 ## Общий формат запуска
+
     $ ecryptomgr install|uninstall|clean|license|status [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
 
 Commands:
@@ -64,11 +68,13 @@ Arch (autodetected if omit)
 Для установки криптопровайдера загрузите предлагаемые поставщиком файлы и запустите в каталоге с ними команду ecryptmgr с нужными параметрами.
 
 Examples:
+
     $ ecryptomgr install cprocsp
     $ ecryptomgr install cprocsp both
     $ ecryptomgr install itcs 32
 
 Для самой актуальной справки смотрите
+
     $ ecryptomgr --help
 
 ### Низкоуровневые средства
@@ -76,9 +82,11 @@ Examples:
 Можно непосредственно использовать скрипты
 
     $ ./install_cryptopro.sh [--devel] 32|64|both
+
 для установки 32-битной, 64-битной версии, или both для установки обеих версий (рекомендуется).
 
 Для удаления:
+
     $ ./uninstall_cryptopro.sh 32|64|both
 
 ### Классы защиты КС1, КС2, КС3
@@ -90,19 +98,13 @@ Examples:
 
 TODO: check installed components and print about needed order
 
-копировать install.sh в систпму при установке или отказаться от него, чтобы удаление не требовало дистрибутива.
+копировать uninstall.sh в систему при установке или отказаться от него, чтобы удаление не требовало дистрибутива.
 
 TODO:
-epme вызывает apt-get remove для пакетов, которых нет при удалении через rpm
-
-TODO:
+отказаться от использования install.sh
 install.sh вызывает uninstall, если видит, что пакеты уже установлены:
 ./uninstall.sh: строка 88: lsb-cprocsp-rdr-5.0.11453-5.i686: команда не найдена
 
 TODO itcs both:
 change scripts and rename package too
 
-TODO:
-Роса:
-http://wiki.rosalab.ru/ru/index.php/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F_%D0%BF%D0%BE_%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B5_%D0%9A%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%9F%D1%80%D0%BE
-Astra
