@@ -120,8 +120,8 @@ shift
 [ "$1" = "--devel" ] && DEVEL=$1 && shift
 [ "$1" = "--nogui" ] && GUI='' && shift
 
-if [ -n "$(epmqp cprocsp)" ] ; then
-    info "You are already have cprocsp packages installed. Run uninstall_cryptopro.sh first (or errors are possible)."
+if [ -n "$(epmqp cprocsp | grep "^cprocsp-")" ] ; then
+    fatal "You are already have cprocsp packages installed. Run uninstall first."
 fi
 
 

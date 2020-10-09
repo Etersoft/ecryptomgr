@@ -4,7 +4,7 @@
 
 # TODO: since vipnetcsp_pkg_manager.sh
 
-LOCALPATH="/opt/distr/VipNet"
+LOCALPATH="/opt/distr/ViPNet"
 LOCALPATH2="/var/ftp/pvt/Windows/Crypto/ViPNet/ViPNet CSP Linux 4.2.10.51042/Комплект пользователя/SOFT/rpm"
 
 # TODO: only if not root
@@ -62,9 +62,6 @@ shift
 [ "$1" = "--devel" ] && DEVEL=$1 && shift
 [ "$1" = "--nogui" ] && GUI='' && shift
 
-#if [ -n "$(epmqp itcs)" ] ; then
-#    info "You are already have itcs packages installed. Run uninstall_itcs.sh first (or errors are possible)."
-#fi
 
 # epmi does rpm -Uvh, it replaces arch packages (don't allow two package with the same name and other arches)
 direct_epmi()
@@ -148,6 +145,11 @@ install_itcs()
          epmi itcs-csp-dev-*.noarch.rpm || fatal
     fi
 }
+
+if [ -n "$(epmqp itcs | grep "^itcs-")" ] ; then
+    fatal "You are already have itcs packages installed. Run uninstall first."
+fi
+
 
 L=$(get_distr_dir "itcs*.rpm") || fatal "Can't find itcs*.rpm in the current dir $(pwd). Download it and put in here or it $LOCALPATH."
 cd "$L"
