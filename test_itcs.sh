@@ -138,6 +138,7 @@ logger()
     cat
 }
 
+IC=/opt/itcs/bin/csp_integrity_check.sh
 echo
-info "Checking integrity via /opt/itcs/bin/csp_integrity_check.sh ..."
-. /opt/itcs/bin/csp_integrity_check.sh
+info "Checking integrity via $IC ..."
+. $IC
