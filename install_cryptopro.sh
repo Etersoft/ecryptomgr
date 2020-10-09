@@ -136,6 +136,8 @@ if [ -n "$INSTALL64" ] ; then
     cd linux-amd64 || fatal
     install_lsb64 || fatal
 
+    ./integrity.sh || fatal
+
     echo
     echo "Installing x86_64 packages ..."
 
@@ -186,6 +188,8 @@ if [ -n "$INSTALL32" ] ; then
 
     cd linux-ia32 || fatal
     install_lsb32 || fatal
+
+    ./integrity.sh || fatal
 
     echo
     echo "Installing i686 packages ..."
