@@ -1,5 +1,6 @@
 #!/bin/sh
 
+DOWNLOADDIR="$(xdg-user-dir DOWNLOAD 2>/dev/null)"
 LOCALPATH="/opt/distr/CadesPlugin"
 LOCALPATH2="/var/ftp/pvt/Linux/CryptoPro CSP/CADES"
 
@@ -34,13 +35,14 @@ download_file()
 get_distr_dir()
 {
     local i
-    for i in "$LOCALPATH" "$LOCALPATH2" . ; do
+    for i in "$DOWNLOADDIR" "$LOCALPATH" "$LOCALPATH2" . ; do
         [ -f "$i/$1" ] && echo "$i" && return
     done
 
     # TODO: if /opt/dists is writeable
     # FIXME: do not output from this
     #info "Can't find $1 in $LOCALPATH or in the current dir, so start downloading ..."
+    info "Downloading $CADESBASEURL/$1 to $(pwd) ..."
     download_file "$CADESBASEURL/$1" && echo "." && return
 
     return 1

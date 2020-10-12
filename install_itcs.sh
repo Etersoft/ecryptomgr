@@ -4,6 +4,7 @@
 
 # TODO: since vipnetcsp_pkg_manager.sh
 
+DOWNLOADDIR="$(xdg-user-dir DOWNLOAD 2>/dev/null)"
 LOCALPATH="/opt/distr/ViPNet"
 LOCALPATH2="/var/ftp/pvt/Windows/Crypto/ViPNet/ViPNet CSP Linux 4.2.10.51042/Комплект пользователя/SOFT/rpm"
 
@@ -27,7 +28,7 @@ info()
 get_distr_dir()
 {
     local i
-    for i in "$LOCALPATH" "$LOCALPATH2" . ; do
+    for i in "$DOWNLOADDIR" "$LOCALPATH" "$LOCALPATH2" . ; do
         #ls -1 "$i" | grep -q "^$1$" && echo "$i" && return
         ls "$i"/$1 2>/dev/null >/dev/null && echo "$i" && return
     done

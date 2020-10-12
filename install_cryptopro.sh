@@ -2,6 +2,7 @@
 
 # see https://www.altlinux.org/КриптоПро
 
+DOWNLOADDIR="$(xdg-user-dir DOWNLOAD 2>/dev/null)"
 LOCALPATH="/opt/distr/CryptoPro"
 LOCALPATH2="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
 
@@ -25,7 +26,7 @@ info()
 get_distr_dir()
 {
     local i
-    for i in "$LOCALPATH" "$LOCALPATH2" . ; do
+    for i in "$DOWNLOADDIR" "$LOCALPATH" "$LOCALPATH2" . ; do
         [ -f "$i/$1" ] && echo "$i" && return
     done
     return 1
@@ -36,6 +37,7 @@ unpack_tgz()
     epm assure erc || fatal
     local ar=$(get_distr_dir $1)
     [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or it $LOCALPATH."
+    #info "Unpacking $ar/$1 ..."
     erc "$ar/$1"
 }
 
