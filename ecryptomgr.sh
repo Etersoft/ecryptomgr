@@ -21,18 +21,18 @@ Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [--nogui]
 
 Commands:
     install - install crypto provider
-    remove - uninstall crypto provider
-    clean - remove old files after uninstall (wipe all related data)
+    remove  - uninstall crypto provider
+    clean   - remove old files after uninstall (wipe all related data)
     license - check license status
-    status - check if crypto provider is installed
-    test - run test (in development)
+    status  - check if crypto provider is installed
+    test    - run test (in development)
 
 Crypto providers:
     cprocsp - CryptoPro
-    itcs - ViPNet CSP
+    itcs    - ViPNet CSP
     rutoken - ruToken
     jacarta - JaCarta
-    cades - CryptoPro CAdES Plugin
+    cades   - CryptoPro CAdES Plugin
 
 Options:
     --devel - install development packages too
@@ -43,7 +43,7 @@ Arch:
       64 - x86_64 packages
     both - install both 32 and 64 bit (not supported yet for ViPNet CSP)
 
-Download crypto provider distro files and run ecryptomgr install command with a appropiate args
+Download crypto provider distro files and run ecryptomgr install command with appropiate args.
 
 Examples:
  $ ecryptomgr install cprocsp
