@@ -156,6 +156,10 @@ if [ -n "$INSTALL64" ] ; then
     # PKCS#11
     epmi lsb-cprocsp-pkcs11-64-*.x86_64.rpm
 
+    # if epmqp libpcsclite
+    # needed for other cprocsp-rdr
+    epmi cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
+
     if epmqp jcPKCS11-2 ; then
         # Note: have brain broken postinstall script
         epmi cprocsp-rdr-jacarta-64-*.x86_64.rpm  || fatal
@@ -163,8 +167,6 @@ if [ -n "$INSTALL64" ] ; then
     if epmqp librtpkcs11ecp ; then
         epmi cprocsp-rdr-rutoken-64-*.x86_64.rpm  || fatal
     fi
-    #if epmqp libpcsclite
-    epmi cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
 
     if [ -n "$GUI" ] ; then
         epmi libpango
@@ -216,6 +218,10 @@ if [ -n "$INSTALL32" ] ; then
     # PKCS#11
     epmi lsb-cprocsp-pkcs11-*.i686.rpm
 
+    #if epmqp libpcsclite
+    # needed for other cprocsp-rdr
+    epmi cprocsp-rdr-pcsc-*.i686.rpm || fatal
+
     # TODO: check if the system has rutoken/jacarta supports
     info "Check if Jacarta support is needed ..."
     if epm --quiet installed jcPKCS11-2 >/dev/null ; then
@@ -227,9 +233,6 @@ if [ -n "$INSTALL32" ] ; then
     if epm --quiet installed librtpkcs11ecp >/dev/null ; then
         epmi cprocsp-rdr-rutoken-*.i686.rpm  || fatal
     fi
-
-    #if epmqp libpcsclite
-    epmi cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
     if [ -n "$GUI" ] ; then
         epmi --skip-installed ${BIARCH}libpango ${BIARCH}libgtk+2 ${BIARCH}libSM
