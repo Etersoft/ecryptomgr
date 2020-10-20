@@ -126,6 +126,7 @@ if [ -n "$(epmqp cprocsp | grep "^cprocsp-")" ] ; then
     fatal "You are already have cprocsp packages installed. Run uninstall first."
 fi
 
+$SUDO rm -fv /var/opt/cprocsp/tmp/*lock* 2>/dev/null
 
 if [ -n "$INSTALL64" ] ; then
     if [ -d linux-amd64 ] ; then
