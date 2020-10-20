@@ -56,39 +56,7 @@ fi
 COMMAND="$1" && shift
 
 DEVEL=''
-[ "$1" = "--devel" ] && DEVEL="$1" && shift
 GUI=''
-[ "$1" = "--nogui" ] && GUI="$1" && shift
-
-
-# TODO: detect by files in the current dir
-# second arg
-# TODO: change to cprocsp
-CPROV=cryptopro
-case "$1" in
-    cprocsp|cryptopro)
-        CPROV="cryptopro"
-        ;;
-    itcs|vipnet)
-        CPROV="itcs"
-        ;;
-    rutoken|ruToken)
-        CPROV="rutoken"
-        ;;
-    jacarta|JaCarta)
-        CPROV="jacarta"
-        ;;
-    cades|cadesplugin)
-        CPROV="cades"
-        ;;
-    "")
-        fatal "Run with --help."
-        ;;
-    *)
-        fatal "Unknown provider $1. Run with --help."
-        ;;
-esac
-shift
 
 # TODO: detect by files in the current dir and current arch
 # third arg
@@ -105,14 +73,48 @@ case "$(distro_info -a)" in
         ;;
 esac
 
-for i in 32 64 both ; do
-    [ "$1" = "$i" ] && ARCH=$1
+# TODO: detect by files in the current dir
+# second arg
+# TODO: change to cprocsp
+CPROV=cryptopro
+while [ -n "$1" ] ; do
+case "$1" in
+    cprocsp|cryptopro)
+        CPROV="cryptopro"
+        ;;
+    itcs|vipnet)
+        CPROV="itcs"
+        ;;
+    rutoken|ruToken)
+        CPROV="rutoken"
+        ;;
+    jacarta|JaCarta)
+        CPROV="jacarta"
+        ;;
+    cades|cadesplugin)
+        CPROV="cades"
+        ;;
+    "--devel")
+        DEVEL="$1"
+        ;;
+    "--nogui")
+        GUI="$1"
+        ;;
+    32|64|both)
+        ARCH=$1
+        ;;
+    "")
+        fatal "Run with --help."
+        ;;
+    *)
+        fatal "Unknown provider $1. Run with --help."
+        ;;
+esac
+shift
 done
 
-[ "$1" = "--devel" ] && DEVEL="$1" && shift
-[ "$1" = "--nogui" ] && GUI="$1" && shift
 
-echo "Do $COMMAND $CPROV for $ARCH ..."
+echo "Doing $COMMAND $CPROV for $ARCH arch(es) ..."
 # first arg
 case $COMMAND in
     install)
