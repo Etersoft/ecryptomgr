@@ -12,6 +12,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+Requires: eepm >= 1.7
+
 %define sdir %_datadir/%name
 
 %description

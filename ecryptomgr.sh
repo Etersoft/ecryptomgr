@@ -25,7 +25,7 @@ Commands:
     clean   - remove old files after uninstall (wipe all related data)
     license - check license status
     status  - check if crypto provider is installed
-    test    - run test (in development)
+    test    - check integrity and run some tests
 
 Crypto providers:
     cprocsp - CryptoPro
