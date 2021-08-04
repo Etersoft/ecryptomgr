@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Crypto provider installer
@@ -49,6 +49,10 @@ done
 %sdir/
 
 %changelog
+* Wed Aug 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.3-alt1
+- ecryptomgr.sh: allow args in any order
+- use epm --script to (un)install cades
+
 * Tue Oct 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
 - add user's Download dir checking for a tarball
 - fix install order cprocsp-rdr-pcsc
