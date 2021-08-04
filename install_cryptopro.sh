@@ -155,26 +155,26 @@ if [ -n "$INSTALL64" ] ; then
     fi
 
     # PKCS#11
-    epmi lsb-cprocsp-pkcs11-64-*.x86_64.rpm
+    epmi --scripts lsb-cprocsp-pkcs11-64-*.x86_64.rpm
 
     # if epmqp libpcsclite
     # needed for other cprocsp-rdr
-    epmi cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
+    epmi --scripts cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
 
     if epmqp jcPKCS11-2 ; then
         # Note: have brain broken postinstall script
-        epmi cprocsp-rdr-jacarta-64-*.x86_64.rpm  || fatal
+        epmi --scripts cprocsp-rdr-jacarta-64-*.x86_64.rpm  || fatal
     fi
     if epmqp librtpkcs11ecp ; then
-        epmi cprocsp-rdr-rutoken-64-*.x86_64.rpm  || fatal
+        epmi --scripts cprocsp-rdr-rutoken-64-*.x86_64.rpm  || fatal
     fi
 
     if [ -n "$GUI" ] ; then
         epmi libpango
 
         epmi libgtk+2 libSM
-        epmi cprocsp-cptools-gtk-64-*.x86_64.rpm
-        epmi cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
+        epmi --scripts cprocsp-cptools-gtk-64-*.x86_64.rpm
+        epmi --scripts cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
     fi
 
     cd -
@@ -201,7 +201,7 @@ if [ -n "$INSTALL32" ] ; then
 
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
-        epmi cprocsp-curl-*.i686.rpm lsb-cprocsp-rdr-[45]*.i686.rpm \
+        epmi --scripts cprocsp-curl-*.i686.rpm lsb-cprocsp-rdr-[45]*.i686.rpm \
              lsb-cprocsp-kc1-*.i686.rpm lsb-cprocsp-capilite-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm
     else
         $SUDO i586 bash ./install.sh || fatal
@@ -217,29 +217,29 @@ if [ -n "$INSTALL32" ] ; then
     fi
 
     # PKCS#11
-    epmi lsb-cprocsp-pkcs11-*.i686.rpm
+    epmi --scripts lsb-cprocsp-pkcs11-*.i686.rpm
 
     #if epmqp libpcsclite
     # needed for other cprocsp-rdr
-    epmi cprocsp-rdr-pcsc-*.i686.rpm || fatal
+    epmi --scripts cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
     # TODO: check if the system has rutoken/jacarta supports
     info "Check if Jacarta support is needed ..."
     if epm --quiet installed jcPKCS11-2 >/dev/null ; then
         # Note: have brain broken postinstall script
-        epmi cprocsp-rdr-jacarta-*.i686.rpm
+        epmi --scripts cprocsp-rdr-jacarta-*.i686.rpm
     fi
 
     info "Check if ruToken support is needed ..."
     if epm --quiet installed librtpkcs11ecp >/dev/null ; then
-        epmi cprocsp-rdr-rutoken-*.i686.rpm  || fatal
+        epmi --scripts cprocsp-rdr-rutoken-*.i686.rpm  || fatal
     fi
 
     if [ -n "$GUI" ] ; then
         epmi --skip-installed ${BIARCH}libpango ${BIARCH}libgtk+2 ${BIARCH}libSM
 
-        epmi cprocsp-cptools-gtk-*.i686.rpm
-        epmi cprocsp-rdr-gui-gtk-*.i686.rpm
+        epmi --scripts cprocsp-cptools-gtk-*.i686.rpm
+        epmi --scripts cprocsp-rdr-gui-gtk-*.i686.rpm
     fi
 
     cd -

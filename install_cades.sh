@@ -98,11 +98,11 @@ cd_to_dir()
 
 if [ -n "$INSTALL64" ] ; then
     cd_to_dir cades_linux_amd64
-    epmi cprocsp-pki-cades-64-*.rpm cprocsp-pki-plugin-64-*.rpm
+    epmi --scripts cprocsp-pki-cades-64-*.rpm cprocsp-pki-plugin-64-*.rpm
 fi
 
 if [ -n "$INSTALL32" ] ; then
     cd_to_dir cades_linux_ia32
-    epmi cprocsp-pki-cades-*.rpm cprocsp-pki-plugin-*.rpm
+    epmi --scripts cprocsp-pki-cades-*.rpm cprocsp-pki-plugin-*.rpm
 fi
 

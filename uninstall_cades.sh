@@ -34,9 +34,9 @@ esac
 
 
 if [ -n "$INSTALL64" ] ; then
-    epme cprocsp-pki-cades-64 cprocsp-pki-plugin-64
+    epme --scripts cprocsp-pki-cades-64 cprocsp-pki-plugin-64
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    epme cprocsp-pki-cades cprocsp-pki-plugin
+    epme --scripts cprocsp-pki-cades cprocsp-pki-plugin
 fi
