@@ -64,7 +64,7 @@ install_lsb32()
         return
     fi
 
-    # Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=38855
+    echo "Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=38855"
     # Следующие пакеты имеют неудовлетворенные зависимости:
     #    lsb-cprocsp-rdr.32bit: Для установки требует: lsb-core-ia32 (>= 3.0) но пакет не может быть установлен
 
@@ -72,12 +72,15 @@ install_lsb32()
     epm assure eget
 
     # for install deps
-    epmi lsb-core
+    epmi lsb-core i586-lsb-core
     epme i586-lsb-core --nodeps
 
     case $(distro_info -v) in
         Sisyphus)
-            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/Sisyphus/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
+            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/Sisyphus/i586/RPMS.classic/lsb-core-5.0-alt2.i586.rpm
+            ;;
+        p10)
+            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p10/branch/i586/RPMS.classic/lsb-core-5.0-alt1.i586.rpm
             ;;
         p9)
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
