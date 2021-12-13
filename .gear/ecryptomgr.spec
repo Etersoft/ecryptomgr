@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Crypto provider installer
@@ -49,6 +49,9 @@ done
 %sdir/
 
 %changelog
+* Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.4-alt1
+- install_cryptopro.sh: fix install i586-lsb-core, fix support for Sisyphus and p10
+
 * Wed Aug 04 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.3-alt1
 - ecryptomgr.sh: allow args in any order
 - use epm --script to (un)install cades
