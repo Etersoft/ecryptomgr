@@ -75,7 +75,10 @@ install_lsb32()
 
     case $(distro_info -v) in
         Sisyphus)
-            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/Sisyphus/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
+            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/Sisyphus/i586/RPMS.classic/lsb-core-5.0-alt1.i586.rpm
+            ;;
+        p10)
+            LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p10/branch/i586/RPMS.classic/lsb-core-5.0-alt1.i586.rpm
             ;;
         p9)
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
