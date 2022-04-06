@@ -3,23 +3,7 @@
 # see https://www.altlinux.org/КриптоПро
 # https://support.cryptopro.ru/index.php?/Knowledgebase/Article/View/87/2/ustnovk-kriptopro-csp-n-os-linux--rutoken
 
-# TODO: only if not root
-SUDO=sudo
-
-BIARCH=''
-[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
-
-fatal()
-{
-    echo "FATAL: $*" >&2
-    exit 1
-}
-
-info()
-{
-    echo "$*"
-}
-
+. $(dirname $0)/functions.sh
 
 DEVEL=''
 if [ "$1" = "--devel" ] ; then

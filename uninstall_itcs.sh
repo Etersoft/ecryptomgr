@@ -1,16 +1,6 @@
 #!/bin/sh
 
-# TODO: only if not root
-SUDO=sudo
-
-fatal()
-{
-    echo "FATAL: $*" >&2
-    exit 1
-}
-
-BIARCH=''
-[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
+. $(dirname $0)/functions.sh
 
 
 INSTALL32=''

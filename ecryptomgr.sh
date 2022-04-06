@@ -3,16 +3,7 @@
 SDIR=$(dirname "$0")
 [ "$SDIR" = "." ] && SDIR=$(pwd)
 
-fatal()
-{
-    echo "FATAL: $*" >&2
-    exit 1
-}
-
-info()
-{
-    echo "$*"
-}
+. $SDIR/functions.sh
 
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then

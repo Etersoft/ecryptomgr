@@ -6,22 +6,7 @@ DOWNLOADDIR="$(xdg-user-dir DOWNLOAD 2>/dev/null)"
 LOCALPATH="/opt/distr/CryptoPro"
 LOCALPATH2="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
 
-# TODO: only if not root
-SUDO=sudo
-
-BIARCH=''
-[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
-
-fatal()
-{
-    echo "FATAL: $*" >&2
-    exit 1
-}
-
-info()
-{
-    echo "$*"
-}
+. $(dirname $0)/functions.sh
 
 get_distr_dir()
 {

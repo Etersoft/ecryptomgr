@@ -6,23 +6,12 @@ LOCALPATH2="/var/ftp/pvt/Linux/CryptoPro CSP/CADES"
 
 CADESBASEURL="http://www.cryptopro.ru/products/cades/plugin/get_2_0"
 
-# TODO: only if not root
-SUDO=sudo
+. $(dirname $0)/functions.sh
 
 BIARCH=''
 arch="$(epm print info -a)"
 [ "$arch" = "x86_64" ] && BIARCH="i586-"
 
-fatal()
-{
-    echo "FATAL: $*" >&2
-    exit 1
-}
-
-info()
-{
-    echo "$*"
-}
 
 # Args: URL output_file
 download_file()

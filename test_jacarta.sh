@@ -1,7 +1,6 @@
 #!/bin/sh -x
 
-BIARCH=''
-[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
+. $(dirname $0)/functions.sh
 
 test_token()
 {

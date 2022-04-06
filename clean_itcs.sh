@@ -1,13 +1,6 @@
 #!/bin/sh
 
-# TODO: only if not root
-SUDO=sudo
-
-fatal()
-{
-    echo "FATAL: $*" >&2
-    exit 1
-}
+. $(dirname $0)/functions.sh
 
 
 echo "All cert store will be cleaned!"
