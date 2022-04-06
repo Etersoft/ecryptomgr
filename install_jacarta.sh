@@ -30,11 +30,13 @@ esac
 
 
 if [ -n "$INSTALL64" ] ; then
-    epmi jcPKCS11-2
+    #epmi jcPKCS11-2
+    epmi libjcpkcs11
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    epmi ${BIARCH}jcPKCS11-2
+    #epmi ${BIARCH}jcPKCS11-2
+    epmi ${BIARCH}libjcpkcs11
 fi
 
 epmi opensc
