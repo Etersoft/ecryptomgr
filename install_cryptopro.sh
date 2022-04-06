@@ -72,7 +72,7 @@ install_lsb32()
     epm assure eget
 
     # for install deps
-    epmi lsb-core i586-lsb-core
+    epmi lsb-core i586-lsb-core || fatal
     epme i586-lsb-core --nodeps
 
     case $(epm print info -v) in
