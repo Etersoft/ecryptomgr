@@ -12,7 +12,7 @@ LOCALPATH2="/var/ftp/pvt/Windows/Crypto/ViPNet/ViPNet CSP Linux 4.2.10.51042/–ö–
 SUDO=sudo
 
 BIARCH=''
-[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
 
 fatal()
 {

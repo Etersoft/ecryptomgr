@@ -61,7 +61,7 @@ GUI=''
 # TODO: detect by files in the current dir and current arch
 # third arg
 ARCH=""
-case "$(distro_info -a)" in
+case "$(epm print info -a)" in
     x86_64)
         ARCH=64
         ;;
@@ -69,7 +69,7 @@ case "$(distro_info -a)" in
         ARCH=32
         ;;
     default)
-        echo "Note: arch $(distro_info -a) is not autodetected."
+        echo "Note: arch $(epm print info -a) is not autodetected."
         ;;
 esac
 

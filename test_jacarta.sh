@@ -1,7 +1,7 @@
 #!/bin/sh -x
 
 BIARCH=''
-[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
 
 test_token()
 {

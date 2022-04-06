@@ -8,7 +8,7 @@
 SUDO=sudo
 
 BIARCH=''
-[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
 
 fatal()
 {

@@ -10,7 +10,7 @@ LOCALPATH2="/var/ftp/pvt/Linux/CryptoPro CSP/5.0/5.0.11453"
 SUDO=sudo
 
 BIARCH=''
-[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
 
 fatal()
 {
@@ -51,11 +51,11 @@ install_lsb64()
 install_lsb32()
 {
     epmi lsb-release lsb-init
-    case $(distro_info -d) in
+    case $(epm print info -d) in
         ALTLinux)
             ;;
         *)
-            fatal "$(distro_info -e) is not yet supported"
+            fatal "$(epm print info -e) is not yet supported"
             ;;
     esac
 
@@ -75,7 +75,7 @@ install_lsb32()
     epmi lsb-core i586-lsb-core
     epme i586-lsb-core --nodeps
 
-    case $(distro_info -v) in
+    case $(epm print info -v) in
         Sisyphus)
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/Sisyphus/i586/RPMS.classic/lsb-core-5.0-alt2.i586.rpm
             ;;
@@ -89,7 +89,7 @@ install_lsb32()
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
             ;;
         *)
-            fatal "$(distro_info -e) is not yet supported"
+            fatal "$(epm print info -e) is not yet supported"
             ;;
     esac
 

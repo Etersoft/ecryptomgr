@@ -10,7 +10,7 @@ CADESBASEURL="https://www.cryptopro.ru/sites/default/files/products/cades/curren
 SUDO=sudo
 
 BIARCH=''
-[ "$(distro_info -a)" = "x86_64" ] && BIARCH="i586-"
+[ "$(epm print info -a)" = "x86_64" ] && BIARCH="i586-"
 
 fatal()
 {
