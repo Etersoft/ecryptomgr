@@ -36,7 +36,7 @@ unpack_tgz()
 {
     epm assure erc || fatal
     local ar=$(get_distr_dir $1)
-    [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or it $LOCALPATH."
+    [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or in $LOCALPATH."
     #info "Unpacking $ar/$1 ..."
     erc "$ar/$1"
 }
@@ -133,7 +133,7 @@ $SUDO rm -fv /var/opt/cprocsp/tmp/*lock* 2>/dev/null
 
 if [ -n "$INSTALL64" ] ; then
     if [ -d linux-amd64 ] ; then
-        echo "Note: Will use existed linux-amd64 ..."
+        echo "Note: Will use existed linux-amd64 dir ..."
         # rm -rfv linux-amd64/
         # [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
     else
@@ -151,6 +151,7 @@ if [ -n "$INSTALL64" ] ; then
     # epmi newt52
     epmi "libidn.so.11()(64bit)"
 
+    # TODO: don't use their install.sh
 
     $SUDO bash ./install.sh || fatal
 
