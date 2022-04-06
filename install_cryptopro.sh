@@ -149,6 +149,8 @@ if [ -n "$INSTALL64" ] ; then
 
     # whiptail for install-gui.sh
     # epmi newt52
+    epmi "libidn.so.11()(64bit)"
+
 
     $SUDO bash ./install.sh || fatal
 
@@ -201,6 +203,8 @@ if [ -n "$INSTALL32" ] ; then
 
     echo
     echo "Installing i686 packages ..."
+
+    epmi "libidn.so.11"
 
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
