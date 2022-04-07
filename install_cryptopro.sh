@@ -163,7 +163,7 @@ if [ -n "$INSTALL64" ] ; then
     if [ -n "$GUI" ] ; then
         epmi libpango
 
-        epmi libgtk+2 libSM
+        epmi libgtk+2 libSM libpng12
         epmi --scripts cprocsp-cptools-gtk-64-*.x86_64.rpm
         epmi --scripts cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
     fi
@@ -174,7 +174,7 @@ if [ -n "$INSTALL64" ] ; then
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    if [ -d linux-ia32 ] ; then 
+    if [ -d linux-ia32 ] ; then
         echo "Note: Will use existed linux-ia32 ..."
         # rm -rfv linux-ia32/
         # [ -d linux-ia32 ] && fatal "Remove linux-ia32 dir first"
@@ -229,7 +229,7 @@ if [ -n "$INSTALL32" ] ; then
     fi
 
     if [ -n "$GUI" ] ; then
-        epmi --skip-installed ${BIARCH}libpango ${BIARCH}libgtk+2 ${BIARCH}libSM
+        epmi --skip-installed ${BIARCH}libpango ${BIARCH}libgtk+2 ${BIARCH}libSM ${BIARCH}libpng12
 
         epmi --scripts cprocsp-cptools-gtk-*.i686.rpm
         epmi --scripts cprocsp-rdr-gui-gtk-*.i686.rpm
