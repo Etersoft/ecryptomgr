@@ -152,7 +152,7 @@ if [ -n "$INSTALL64" ] ; then
     # needed for other cprocsp-rdr
     epmi --scripts cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
 
-    if epmqp jcPKCS11-2 ; then
+    if epm installed libjcpkcs11 ; then
         # Note: have brain broken postinstall script
         epmi --scripts cprocsp-rdr-jacarta-64-*.x86_64.rpm  || fatal
     fi
