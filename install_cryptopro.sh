@@ -204,9 +204,10 @@ if [ -n "$INSTALL32" ] ; then
     fi
 
     if [ "$INSTALL32" = "both" ] ; then
-        # hack, otherwise install.sh removed 64bit packages
-        epmi --scripts cprocsp-curl-*.i686.rpm lsb-cprocsp-rdr-[45]*.i686.rpm \
-             lsb-cprocsp-kc1-*.i686.rpm lsb-cprocsp-capilite-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm
+        # install the same packages as for 64 bit
+        # hack, otherwise 32bit install.sh will remove 64bit packages
+        toinstall="$(epmqp --short cprocsp- | grep "cprocsp-.*-64$" | sed -e 's|-64$||')"
+        epmi --scripts $toinstall
     else
         $SUDO i586 bash ./$INSTALLER || fatal
     fi
