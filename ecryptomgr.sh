@@ -8,7 +8,7 @@ SDIR=$(dirname "$0")
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [--nogui] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
+Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [--nogui] [--gui-install] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
 
 Commands:
     install - install crypto provider
@@ -29,6 +29,7 @@ Crypto providers:
 Options:
     --devel - install development packages too
     --nogui - don't install gui packages
+    --gui-install - use GUI installer
 
 Arch:
       32 - i586 packages (does not matter you have 32 or 64 bit OS)
@@ -49,6 +50,7 @@ COMMAND="$1" && shift
 
 DEVEL=''
 GUI=''
+GUIINSTALL=''
 
 # TODO: detect by files in the current dir and current arch
 # third arg
@@ -95,6 +97,9 @@ case "$1" in
     "--nogui")
         GUI="$1"
         ;;
+    "--gui-install")
+        GUIINSTALL="$1"
+        ;;
     32|64|both)
         ARCH=$1
         ;;
@@ -113,7 +118,7 @@ echo "Doing $COMMAND $CPROV for $ARCH arch(es) ..."
 # first arg
 case $COMMAND in
     install)
-            $SDIR/install_$CPROV.sh $DEVEL $GUI $ARCH
+            $SDIR/install_$CPROV.sh $DEVEL $GUI $GUIINSTALL $ARCH
         ;;
     remove|uninstall)
             $SDIR/uninstall_$CPROV.sh $ARCH

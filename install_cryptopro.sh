@@ -87,6 +87,8 @@ DEVEL=''
 [ "$1" = "--devel" ] && DEVEL=$1 && shift
 GUI='--gui'
 [ "$1" = "--nogui" ] && GUI='' && shift
+INSTALLER="install.sh"
+[ "$1" = "--gui-install" ] && INSTALLER='install_gui.sh' && shift
 
 INSTALL32=''
 INSTALL64=''
@@ -109,6 +111,7 @@ shift
 # TODO: improve
 [ "$1" = "--devel" ] && DEVEL=$1 && shift
 [ "$1" = "--nogui" ] && GUI='' && shift
+[ "$1" = "--gui-install" ] && INSTALLER='install-gui.sh' && shift
 
 if [ -n "$(epmqp cprocsp | grep "^cprocsp-")" ] ; then
     fatal "You are already have cprocsp packages installed. Run uninstall first."
@@ -132,13 +135,16 @@ if [ -n "$INSTALL64" ] ; then
     echo
     echo "Installing x86_64 packages ..."
 
-    # whiptail for install-gui.sh
-    # epmi newt52
     epmi "libidn.so.11()(64bit)"
+
+    if [ "$INSTALLER" = "install_gui.sh" ] ; then
+        # whiptail for install-gui.sh
+        epm assure whiptail newt52
+    fi
 
     # TODO: don't use their install.sh
 
-    $SUDO bash ./install.sh || fatal
+    $SUDO bash ./$INSTALLER || fatal
 
 
     if [ -n "$DEVEL" ] ; then
@@ -192,12 +198,17 @@ if [ -n "$INSTALL32" ] ; then
 
     epmi "libidn.so.11"
 
+    if [ "$INSTALLER" = "install_gui.sh" ] ; then
+        # whiptail for install-gui.sh
+        epm assure whiptail newt52
+    fi
+
     if [ "$INSTALL32" = "both" ] ; then
         # hack, otherwise install.sh removed 64bit packages
         epmi --scripts cprocsp-curl-*.i686.rpm lsb-cprocsp-rdr-[45]*.i686.rpm \
              lsb-cprocsp-kc1-*.i686.rpm lsb-cprocsp-capilite-*.i686.rpm cprocsp-rdr-pcsc-*.i686.rpm
     else
-        $SUDO i586 bash ./install.sh || fatal
+        $SUDO i586 bash ./$INSTALLER || fatal
     fi
 
     if [ -n "$DEVEL" ] ; then
@@ -205,8 +216,7 @@ if [ -n "$INSTALL32" ] ; then
     fi
 
     if [ -n "$BIARCH" ] ; then
-        epmi i586-glibc-nss i586-glibc-gconv-modules
-        epm installed sssd-client && epmi i586-sssd-client
+        epm play i586-fix
     fi
 
     # PKCS#11
