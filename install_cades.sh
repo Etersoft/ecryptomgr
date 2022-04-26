@@ -80,7 +80,7 @@ cd_to_dir()
 {
     TARDIR="$1.tar"
     if [ -d $TARDIR ] ; then
-        echo "Note: Will use existed $TARDIR dir ..."
+        echo "Note: Will use existing $TARDIR dir ..."
         # rm -rfv linux-amd64/
         # [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
     else

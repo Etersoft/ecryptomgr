@@ -121,7 +121,7 @@ $SUDO rm -fv /var/opt/cprocsp/tmp/*lock* 2>/dev/null
 
 if [ -n "$INSTALL64" ] ; then
     if [ -d linux-amd64 ] ; then
-        echo "Note: Will use existed linux-amd64 dir ..."
+        echo "Note: Will use existing linux-amd64 dir ..."
         # rm -rfv linux-amd64/
         # [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
     else
@@ -186,7 +186,7 @@ fi
 
 if [ -n "$INSTALL32" ] ; then
     if [ -d linux-ia32 ] ; then
-        echo "Note: Will use existed linux-ia32 ..."
+        echo "Note: Will use existing linux-ia32 ..."
         # rm -rfv linux-ia32/
         # [ -d linux-ia32 ] && fatal "Remove linux-ia32 dir first"
     else
