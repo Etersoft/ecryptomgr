@@ -82,7 +82,7 @@ check_cryptopro()
         check_pkg $i$ARCHSUFFIX $VER $ARCH
     done
 
-    if epmqp --quiet jcPKCS11-2 >/dev/null ; then
+    if epmqp --quiet libjcpkcs11 >/dev/null ; then
         check_pkg cprocsp-rdr-jacarta$ARCHSUFFIX $VER $ARCH
     fi
 

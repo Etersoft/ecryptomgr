@@ -23,9 +23,9 @@ esac
 
 
 if [ -n "$INSTALL64" ] ; then
-    epme jcPKCS11-2
+    epme libjcpkcs11
 fi
 
 if [ -n "$INSTALL32" ] ; then
-    epme ${BIARCH}jcPKCS11-2
+    epme ${BIARCH}libjcpkcs11
 fi
