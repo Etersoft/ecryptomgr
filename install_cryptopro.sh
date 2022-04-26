@@ -142,6 +142,10 @@ if [ -n "$INSTALL64" ] ; then
         epm assure whiptail newt52
     fi
 
+    if [ -n "$GUI" ] ; then
+        epmi --skip-installed libpango libgtk+2 libSM libpng12
+    fi
+
     # TODO: don't use their install.sh
 
     $SUDO bash ./$INSTALLER || fatal
@@ -151,27 +155,28 @@ if [ -n "$INSTALL64" ] ; then
          epmi lsb-cprocsp-devel-*.noarch.rpm
     fi
 
+    epmi --scripts --skip-installed lsb-cprocsp-rdr-64-5.*.x86_64.rpm
     # PKCS#11
-    epmi --scripts lsb-cprocsp-pkcs11-64-*.x86_64.rpm
+    epmi --scripts --skip-installed lsb-cprocsp-pkcs11-64-*.x86_64.rpm
 
     # if epmqp libpcsclite
     # needed for other cprocsp-rdr
-    epmi --scripts cprocsp-rdr-pcsc-64-*.x86_64.rpm || fatal
+    epmi --scripts --skip-installed cprocsp-rdr-pcsc-64-*.x86_64.rpm
 
+    info "Check if Jacarta support is needed ..."
     if epm installed libjcpkcs11 ; then
         # Note: have brain broken postinstall script
-        epmi --scripts cprocsp-rdr-jacarta-64-*.x86_64.rpm  || fatal
+        epmi --scripts --skip-installed cprocsp-rdr-jacarta-64-*.x86_64.rpm
     fi
+
+    info "Check if ruToken support is needed ..."
     if epmqp librtpkcs11ecp ; then
-        epmi --scripts cprocsp-rdr-rutoken-64-*.x86_64.rpm  || fatal
+        epmi --scripts --skip-installed cprocsp-rdr-rutoken-64-*.x86_64.rpm
     fi
 
     if [ -n "$GUI" ] ; then
-        epmi libpango
-
-        epmi libgtk+2 libSM libpng12
-        epmi --scripts cprocsp-cptools-gtk-64-*.x86_64.rpm
-        epmi --scripts cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
+        epmi --scripts --skip-installed cprocsp-cptools-gtk-64-*.x86_64.rpm
+        epmi --scripts --skip-installed cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
     fi
 
     cd -
@@ -203,47 +208,50 @@ if [ -n "$INSTALL32" ] ; then
         epm assure whiptail newt52
     fi
 
+    if [ -n "$GUI" ] ; then
+        epmi --skip-installed ${BIARCH}libpango ${BIARCH}libgtk+2 ${BIARCH}libSM ${BIARCH}libpng12
+    fi
+
     if [ "$INSTALL32" = "both" ] ; then
         # install the same packages as for 64 bit
         # hack, otherwise 32bit install.sh will remove 64bit packages
-        toinstall="$(epmqp --short cprocsp- | grep "cprocsp-.*-64$" | sed -e 's|-64$||')"
+        toinstall="$(epmqp --short cprocsp- | grep "cprocsp-.*-64$" | sed -e 's|-64$|-*.rpm|')"
         epmi --scripts $toinstall
     else
         $SUDO i586 bash ./$INSTALLER || fatal
     fi
 
     if [ -n "$DEVEL" ] ; then
-         epmi lsb-cprocsp-devel-*.noarch.rpm
+         epmi --scripts --skip-installed lsb-cprocsp-devel-*.noarch.rpm
     fi
 
     if [ -n "$BIARCH" ] ; then
         epm play i586-fix
     fi
 
+    epmi --scripts --skip-installed lsb-cprocsp-rdr-5.*.i686.rpm
     # PKCS#11
-    epmi --scripts lsb-cprocsp-pkcs11-*.i686.rpm
+    epmi --scripts --skip-installed lsb-cprocsp-pkcs11-*.i686.rpm
 
     #if epmqp libpcsclite
     # needed for other cprocsp-rdr
-    epmi --scripts cprocsp-rdr-pcsc-*.i686.rpm || fatal
+    epmi --scripts --skip-installed cprocsp-rdr-pcsc-*.i686.rpm || fatal
 
     # TODO: check if the system has rutoken/jacarta supports
     info "Check if Jacarta support is needed ..."
-    if epm --quiet installed jcPKCS11-2 >/dev/null ; then
+    if epm installed libjcpkcs11 >/dev/null ; then
         # Note: have brain broken postinstall script
-        epmi --scripts cprocsp-rdr-jacarta-*.i686.rpm
+        epmi --scripts --skip-installed cprocsp-rdr-jacarta-*.i686.rpm
     fi
 
     info "Check if ruToken support is needed ..."
-    if epm --quiet installed librtpkcs11ecp >/dev/null ; then
-        epmi --scripts cprocsp-rdr-rutoken-*.i686.rpm  || fatal
+    if epm installed librtpkcs11ecp >/dev/null ; then
+        epmi --scripts --skip-installed cprocsp-rdr-rutoken-*.i686.rpm  || fatal
     fi
 
     if [ -n "$GUI" ] ; then
-        epmi --skip-installed ${BIARCH}libpango ${BIARCH}libgtk+2 ${BIARCH}libSM ${BIARCH}libpng12
-
-        epmi --scripts cprocsp-cptools-gtk-*.i686.rpm
-        epmi --scripts cprocsp-rdr-gui-gtk-*.i686.rpm
+        epmi --scripts --skip-installed cprocsp-cptools-gtk-*.i686.rpm
+        epmi --scripts --skip-installed cprocsp-rdr-gui-gtk-*.i686.rpm
     fi
 
     cd -
