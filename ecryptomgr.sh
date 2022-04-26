@@ -24,6 +24,7 @@ Crypto providers:
     rutoken - ruToken
     jacarta - JaCarta
     cades   - CryptoPro CAdES Plugin
+    pcsc    - PC/SC support
 
 Options:
     --devel - install development packages too
@@ -78,6 +79,9 @@ case "$1" in
         ;;
     rutoken|ruToken)
         CPROV="rutoken"
+        ;;
+    pcsc)
+        CPROV="pcsc"
         ;;
     jacarta|JaCarta)
         CPROV="jacarta"
