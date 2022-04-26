@@ -30,7 +30,7 @@ install_lsb64()
 {
     epmi lsb-release lsb-init
     epme i586-lsb-core --nodeps
-    epm reinstall lsb-core || fatal
+    epm --auto reinstall lsb-core || fatal
 }
 
 install_lsb32()
