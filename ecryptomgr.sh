@@ -42,6 +42,7 @@ Examples:
  $ ecryptomgr install cprocsp
  $ ecryptomgr install cprocsp both
  $ ecryptomgr install --devel itcs 32
+ $ ecryptomgr clean cprocsp
 EOF
     exit
 fi
@@ -70,7 +71,7 @@ esac
 # TODO: detect by files in the current dir
 # second arg
 # TODO: change to cprocsp
-CPROV=cryptopro
+CPROV=''
 while [ -n "$1" ] ; do
 case "$1" in
     cprocsp|cryptopro)
@@ -113,6 +114,7 @@ esac
 shift
 done
 
+[ -n "$CPROV" ] || fatal "Run with provider name after command (cryptopro and so on)"
 
 echo "Doing $COMMAND $CPROV for $ARCH arch(es) ..."
 # first arg
