@@ -26,6 +26,7 @@ Crypto providers:
     jacarta - JaCarta
     cades   - CryptoPro CAdES Plugin
     pcsc    - PC/SC support
+    ifcplugin - IFCPlugin
 
 Options:
     --devel - install development packages too
@@ -93,6 +94,9 @@ case "$1" in
         ;;
     cades|cadesplugin)
         CPROV="cades"
+        ;;
+    ifcplugin)
+        CPROV="ifcplugin"
         ;;
     "--devel")
         DEVEL="$1"
