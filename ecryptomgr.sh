@@ -20,6 +20,7 @@ Commands:
 
 Crypto providers:
     cprocsp - CryptoPro
+    csp-fns - CryptoPro FNS (free to use) (with GUI by default)
     itcs    - ViPNet CSP
     rutoken - ruToken
     jacarta - JaCarta
@@ -39,6 +40,7 @@ Arch:
 Download crypto provider distro files and run ecryptomgr install command with appropiate args.
 
 Examples:
+ $ ecryptomgr install csp-fns
  $ ecryptomgr install cprocsp
  $ ecryptomgr install cprocsp both
  $ ecryptomgr install --devel itcs 32
