@@ -12,7 +12,7 @@ download_file()
 {
     local file="$2"
 # TODO: Невозможно локально проверить подлинность запрашивающего.
-    eget -k "$1"
+    epm tool eget -k "$1"
     [ -s "$file" ] && return
     rm -f "$file"
     return 1

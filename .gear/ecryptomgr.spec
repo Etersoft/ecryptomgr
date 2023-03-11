@@ -12,8 +12,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: eget >= 5.3
-Requires: eepm >= 3.16
+Requires: eepm >= 3.28.8
 
 %define sdir %_datadir/%name
 

@@ -19,7 +19,7 @@ download_file()
     local file="$2"
     # arch hack
     [ -n "$INSTALL32" ] && [ "$arch" = "x86_64" ] && ARCHCMD=i586 || ARCHCMD=''
-    $ARCHCMD eget -k -U "$1"
+    $ARCHCMD epm tool eget -k -U "$1"
     [ -s "$file" ] && return
     rm -f "$file"
     return 1

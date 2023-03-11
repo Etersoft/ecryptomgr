@@ -53,9 +53,6 @@ install_lsb32()
     # Следующие пакеты имеют неудовлетворенные зависимости:
     #    lsb-cprocsp-rdr.32bit: Для установки требует: lsb-core-ia32 (>= 3.0) но пакет не может быть установлен
 
-    # HACK:
-    epm assure eget
-
     # for install deps
     epmi lsb-core i586-lsb-core || fatal
     epme i586-lsb-core --nodeps
@@ -78,7 +75,7 @@ install_lsb32()
             ;;
     esac
 
-    eget $LSBCOREURL
+    epm tool eget $LSBCOREURL
     epme lsb-core --nodeps
     epmi $(basename $LSBCOREURL)
 }
