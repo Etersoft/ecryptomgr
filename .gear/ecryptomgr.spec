@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Crypto provider installer
@@ -49,6 +49,12 @@ done
 %sdir/
 
 %changelog
+* Sat Mar 11 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt1
+- add initial CryptoPro FNS install support
+- add initial ifcplugin support
+- use eepm tool eget instead of standalone eget
+- small cleanup
+
 * Wed Apr 27 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - fix libjcpkcs11 name
 - fix typo in a description
