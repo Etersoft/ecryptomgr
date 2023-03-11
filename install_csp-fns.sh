@@ -20,7 +20,7 @@ unpack_tgz()
 {
     epm assure erc || fatal
     local ar=$(get_distr_dir $1)
-    [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or in $LOCALPATH."
+    [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it from https://cryptopro.ru/fns_experiment and put in here or in $LOCALPATH."
     #info "Unpacking $ar/$1 ..."
     erc "$ar/$1"
 }
@@ -72,9 +72,13 @@ if [ -n "$INSTALL64" ] ; then
     pkgtype=$(epm print info -p)
     basename="fns-amd64"
     tarname="csp-fns-amd64.tgz"
+    #basename="linux-amd64"
+    #tarname="linux-amd64.tgz"
     if [ "$pkgtype" = "deb" ] ; then
         basename="fns-amd64_deb"
         tarname="csp-fns-amd64_deb.tgz"
+        #basename="linux-amd64_deb"
+        #tarname="linux-amd64_deb.tgz"
     fi
     if [ -d $basename ] ; then
         echo "Note: Will use existing $basename dir ..."

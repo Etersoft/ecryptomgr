@@ -80,6 +80,9 @@ case "$1" in
     cprocsp|cryptopro)
         CPROV="cryptopro"
         ;;
+    csp-fns|cryptopro-fns)
+        CPROV="csp-fns"
+        ;;
     itcs|vipnet)
         CPROV="itcs"
         ;;

@@ -78,14 +78,17 @@ esac
 
 cd_to_dir()
 {
-    TARDIR="$1.tar"
-    if [ -d $TARDIR ] ; then
+    TARDIR="$1"
+    if [ -d $TARDIR ] || [ -d $TARDIR.tar ] ; then
         echo "Note: Will use existing $TARDIR dir ..."
         # rm -rfv linux-amd64/
         # [ -d linux-amd64 ] && fatal "Remove linux-amd64 dir first"
     else
-        unpack_tgz $TARDIR.gz || fatal "Can't unpack"
+        unpack_tgz $TARDIR.tar.gz || fatal "Can't unpack"
     fi
+
+    # hack for support old tars
+    [ -d $TARDIR.tar ] && TARDIR=$TARDIR.tar
 
     cd $TARDIR || fatal
 }

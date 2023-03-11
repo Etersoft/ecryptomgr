@@ -21,7 +21,7 @@ unpack_tgz()
 {
     epm assure erc || fatal
     local ar=$(get_distr_dir $1)
-    [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it and put in here or in $LOCALPATH."
+    [ -n "$ar" ] || fatal "Can't find $1 in the current dir $(pwd). Download it from https://cryptopro.ru/fns and put in here or in $LOCALPATH."
     #info "Unpacking $ar/$1 ..."
     erc "$ar/$1"
 }
