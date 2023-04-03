@@ -1,7 +1,3 @@
-TODO status
-использовать epm --scripts install
-Перейти на общий functions и использовать функцию установки стороннего пакета
-внедрить контроль зависимостей
 
 ## Crypto Manager — управление криптосредствами в Linux.
 
@@ -26,11 +22,15 @@ TODO status
 
     # epm install ecryptomgr
 
+Если в репозитории вашей системы пакет ecryptomgr слишком старый или отсутствует, вы можете установить через через Korinf командой
+    # epm ei ecryptomgr
+
 ### CryptoPro
 
-Запустите в каталоге со скаченным архивом поставки КриптоПро, чтобы установить 64-битную версию:
+Запустите в каталоге со скачанным архивом поставки КриптоПро:
 
-    $ ecryptomgr install cprocsp 64
+    # ecryptomgr install pcsc
+    # ecryptomgr install cprocsp
 
 ### VipNet CSP
 
@@ -71,7 +71,7 @@ Arch (autodetected if omit)
 
 Для установки криптопровайдера загрузите предлагаемые поставщиком файлы и запустите в каталоге с ними команду ecryptmgr с нужными параметрами.
 
-Examples:
+Пример использования:
 
     $ ecryptomgr install cprocsp
     $ ecryptomgr install cprocsp both
@@ -81,7 +81,7 @@ Examples:
 
     $ ecryptomgr --help
 
-### Низкоуровневые средства
+### Низкоуровневые средства (разработка)
 
 При разработке, склонировав репозиторий, можно непосредственно использовать скрипты
 
@@ -108,6 +108,10 @@ TODO:
 отказаться от использования install.sh
 install.sh вызывает uninstall, если видит, что пакеты уже установлены:
 ./uninstall.sh: строка 88: lsb-cprocsp-rdr-5.0.11453-5.i686: команда не найдена
+
+TODO status
+Перейти на общий functions и использовать функцию установки стороннего пакета
+внедрить контроль зависимостей
 
 TODO itcs both:
 change scripts and rename package too
