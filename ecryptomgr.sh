@@ -8,7 +8,9 @@ SDIR=$(dirname "$0")
 
 if [ "$1" = "-h" ] || [ "$1" == "--help" ] ; then
     cat <<EOF
-Usage: $ ecryptomgr install|remove|clean|license|status|test [--devel] [--nogui] [--gui-install] [cprocsp|itcs|rutoken|jacarta|cades] [32|64|both]
+ecryptomgr - crypto provider manager    Telegram: https://t.me/crypto_etersoft  https://wiki.etersoft.ru/CRYPTO@Etersoft
+
+Usage: $ ecryptomgr <command>install|remove|clean|license|status|test [options] [cprocsp|itcs|rutoken|jacarta|cades] [arch]
 
 Commands:
     install - install crypto provider
@@ -17,6 +19,11 @@ Commands:
     license - check license status
     status  - check if crypto provider is installed
     test    - check integrity and run some tests
+
+Options:
+    --devel - install development packages too
+    --nogui - don't install gui packages
+    --gui-install - use GUI installer
 
 Crypto providers:
     cprocsp - CryptoPro
@@ -28,20 +35,16 @@ Crypto providers:
     pcsc    - PC/SC support
     ifcplugin - IFCPlugin
 
-Options:
-    --devel - install development packages too
-    --nogui - don't install gui packages
-    --gui-install - use GUI installer
 
 Arch:
       32 - i586 packages (does not matter you have 32 or 64 bit OS)
-      64 - x86_64 packages
+      64 - x86_64 packages (default on x86_64 or aarch64 systems)
     both - install both 32 and 64 bit (not supported yet for ViPNet CSP)
 
-Download crypto provider distro files and run ecryptomgr install command with appropiate args.
+Download crypto provider distro files and run ecryptomgr install command with appropriate args.
 
 Examples:
- $ ecryptomgr install csp-fns
+ $ ecryptomgr install cryptopro
  $ ecryptomgr install cprocsp
  $ ecryptomgr install cprocsp both
  $ ecryptomgr install --devel itcs 32
@@ -123,7 +126,14 @@ esac
 shift
 done
 
-[ -n "$CPROV" ] || fatal "Run with provider name after command (cryptopro and so on)"
+if [ -z "$CPROV" ] ; then
+cat <<EOF >&2
+ecryptomgr - crypto provider manager    Telegram: https://t.me/crypto_etersoft  https://wiki.etersoft.ru/CRYPTO@Etersoft
+
+Run $ ecryptomgr --help to get help.
+EOF
+    exit 1
+fi
 
 echo "Doing $COMMAND $CPROV for $ARCH arch(es) ..."
 # first arg
