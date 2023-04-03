@@ -27,12 +27,12 @@ esac
 
 if [ -n "$INSTALL64" ] ; then
 
-    epmi pcsc-lite-ccid libpcsclite
+    epmi pcsc-lite-ccid libpcsclite pcsc-lite-rutokens
 fi
 
 if [ -n "$INSTALL32" ] ; then
 
-    epmi ${BIARCH}pcsc-lite-ccid ${BIARCH}libpcsclite
+    epmi ${BIARCH}pcsc-lite-ccid ${BIARCH}libpcsclite ${BIARCH}pcsc-lite-rutokens
 fi
 
 epmi opensc
@@ -40,3 +40,5 @@ epmi pcsc-lite
 
 echo "Enabling pcscd service ..."
 serv pcscd on
+
+echo "Now you can check your token via $ pcsc_scan command"
