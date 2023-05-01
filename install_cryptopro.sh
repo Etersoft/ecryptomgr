@@ -60,13 +60,13 @@ install_lsb32()
         Sisyphus)
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/Sisyphus/i586/RPMS.classic/lsb-core-5.0-alt3.i586.rpm
             ;;
-        p10)
+        10|p10)
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p10/branch/i586/RPMS.classic/lsb-core-5.0-alt1.i586.rpm
             ;;
-        p9)
+        c9f2|p9)
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p9/branch/i586/RPMS.classic/lsb-core-4.0-alt12.i586.rpm
             ;;
-        p8)
+        c8.1|p8)
             LSBCOREURL=http://ftp.basealt.ru/pub/distributions/ALTLinux/p8/branch/i586/RPMS.classic/lsb-core-4.0-alt5.i586.rpm
             ;;
         *)
