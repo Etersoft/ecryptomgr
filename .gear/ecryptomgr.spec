@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Crypto provider installer
@@ -49,6 +49,12 @@ done
 %sdir/
 
 %changelog
+* Mon May 01 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt1
+- install_cryptopro.sh: drop LOCALPATH2
+- install_pcsc.sh: add pcsc-lite-rutokens install
+- install_cryptopro.sh: fix lsb-core file for Sisyphus
+- install_cryptopro.sh: add support for some ALT versions
+
 * Sat Mar 11 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt1
 - add initial CryptoPro FNS install support
 - add initial ifcplugin support
