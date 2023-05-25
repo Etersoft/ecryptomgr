@@ -170,6 +170,9 @@ if [ -n "$INSTALL64" ] ; then
         epmi --scripts --skip-installed cprocsp-rdr-rutoken-64-*.x86_64.rpm
     fi
 
+    epmi --scripts cprocsp-rdr-cryptoki-64-*.x86_64.rpm
+    epmi --scripts cprocsp-rdr-inpaspot-64-*.x86_64.rpm
+
     if [ -n "$GUI" ] ; then
         epmi --scripts --skip-installed cprocsp-cptools-gtk-64-*.x86_64.rpm
         epmi --scripts --skip-installed cprocsp-rdr-gui-gtk-64-*.x86_64.rpm
@@ -244,6 +247,9 @@ if [ -n "$INSTALL32" ] ; then
     if epm installed librtpkcs11ecp >/dev/null ; then
         epmi --scripts --skip-installed cprocsp-rdr-rutoken-*.i686.rpm  || fatal
     fi
+
+    epmi --scripts cprocsp-rdr-cryptoki-*.i686.rpm
+    epmi --scripts cprocsp-rdr-inpaspot-*.i686.rpm
 
     if [ -n "$GUI" ] ; then
         epmi --scripts --skip-installed cprocsp-cptools-gtk-*.i686.rpm
